@@ -1,0 +1,12 @@
+Package: VPA
+Type: Package
+Title: Variant Pattern Analyzer for next-generation sequencing study
+Version: 0.2.2
+Date: 2011-07-23
+Author: Qiang Hu
+Maintainer: Qiang Hu <huqmail@gmail.com>
+Suggests: Rsamtools
+Enhances: Rmpi, snow, snowfall
+Description: VPA (Variant Pattern Analyzer) is a package for prioritizing variants with specified frequency pattern from multiple study subjects in next-generation sequencing study.
+License: GPL-2
+LazyLoad: yes
