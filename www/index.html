@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+lang="en" xml:lang="en">
+<head>
+<title>Variant Pattern Analyzer</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2011-08-09 Tue"/>
+<meta name="author" content="Qiang"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+
+<h1 class="title">Variant Pattern Analyzer</h1>
+
+
+<p><br/>
+<b>Welcome to Variant Pattern Analyzer (VPA) project!</b><br/>
+</p>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 Introduction </a></li>
+<li><a href="#sec-2">2 Dependencies </a></li>
+<li><a href="#sec-3">3 Installation </a></li>
+<li><a href="#sec-4">4 Project summary </a></li>
+<li><a href="#sec-5">5 News </a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Introduction </h2>
+<div class="outline-text-2" id="text-1">
+
+<p>The package can be used to extract variants with user-specified frequency based on either variant calls alone or both variant and sequence calls. To make use of sequence call data, the installation of open source tabix tool is required. Examples of using VPA can be found in doc/VPA.pdf.<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Dependencies </h2>
+<div class="outline-text-2" id="text-2">
+
+<p>The package can invoke tabix in one of the following two ways.<br/>
+a)To install tabix directly from SAMtools: <br/>
+</p><ul>
+<li>
+URL: <a href="http://samtools.sourceforge.net/tabix.shtml">http://samtools.sourceforge.net/tabix.shtml</a>. <br/>
+</li>
+<li>
+User can specify the path of tabix in the argument "tabix=" of the function LoadFiltering/pos2seq.<br/>
+</li>
+</ul>
+
+<p>b)To install developing version of Rsamtools:<br/>
+</p><ul>
+<li>
+URL: <a href="http://www.bioconductor.org/packages/2.9/bioc/html/Rsamtools.html">http://www.bioconductor.org/packages/2.9/bioc/html/Rsamtools.html</a><br/>
+</li>
+<li>
+The function scanTabix in the package Rsamtools can be invoked by the argument tabix=NULL instead.<br/>
+</li>
+</ul>
+
+<p>Tabix is recommended for installation as it runs more efficiently than Rsamtools in current version.<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Installation </h2>
+<div class="outline-text-2" id="text-3">
+
+<p>install.packages("VPA", repos="<a href="http://R-Forge.R-project.org">http://R-Forge.R-project.org</a>")<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Project summary </h2>
+<div class="outline-text-2" id="text-4">
+
+<p>The project summary page you can find <a href="http://r-forge.r-project.org/projects/vpa/">here</a>.<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> News </h2>
+<div class="outline-text-2" id="text-5">
+
+<p>Date:   Mon Aug 8 08:56:21<br/>
+version 0.2.2, pos2seq can choose Rsamtools instead of tabix<br/>
+Date: Thu Jul 28<br/>
+version 0.2.1. add REF and ALT to function vcfreq.<br/>
+</p>
+<p><br/>
+</p></div>
+</div>
+<div id="postamble">
+<p class="author"> Author: Qiang
+<a href="mailto:huqmail@gmail.com">&lt;huqmail@gmail.com&gt;</a>
+</p>
+<p class="date"> Date: 2011-08-09 Tue</p>
+<p class="creator">HTML generated by org-mode 6.34c in emacs 23</p>
+</div>
+</div>
+</body>
+</html>
