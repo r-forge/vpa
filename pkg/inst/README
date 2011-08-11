@@ -2,7 +2,7 @@ VPA guide
 version 0.2.2
 
 (1) Introduction.
-The package can be used to extract variants with user-specified frequency based on either variant calls alone or both variant and sequence calls. To make use of sequence call data, the installation of open source tabix tool is required. Examples of using VPA can be found in doc/VPA.pdf.
+The package can be used to extract sequencing variants with user-specified frequency based on either variant calls alone or both variant and sequence calls. To make use of sequence call data, the installation of open source tabix tool is required. Examples of using VPA can be found in doc/VPA.pdf.
 
 (2) Dependencies.
 The package can invoke tabix in one of the following two ways.
