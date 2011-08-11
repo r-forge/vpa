@@ -1,0 +1,34 @@
+#+TITLE:     Variant Pattern Analyzer
+#+AUTHOR:    Qiang
+#+EMAIL:     huqmail@gmail.com
+#+DATE:      2011-08-10 Wed
+#+DESCRIPTION: 
+#+KEYWORDS: 
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:t toc:t \n:t @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:nil skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+
+
+*Welcome to Variant Pattern Analyzer (VPA) project!*
+* Introduction
+  The package can be used to extract sequencing variants with user-specified frequency based on either variant calls alone or both variant and sequence calls. To make use of sequence call data, the installation of open source tabix tool is required. Examples of using VPA can be found in doc/VPA.pdf.
+* Dependencies
+The package can invoke tabix in one of the following two ways.
+a)To install tabix directly from SAMtools: 
+	- URL: http://samtools.sourceforge.net/tabix.shtml. 
+	- User can specify the path of tabix in the argument "tabix=" of the function LoadFiltering/pos2seq.
+b)To install developing version of Rsamtools:
+	- URL: http://www.bioconductor.org/packages/2.9/bioc/html/Rsamtools.html
+	- The function scanTabix in the package Rsamtools can be invoked by the argument tabix=NULL instead.
+Tabix is recommended for installation as it runs more efficiently than Rsamtools in current version.
+* Installation
+install.packages("VPA", repos="http://R-Forge.R-project.org")
+* Project summary
+The project summary page you can find [[http://r-forge.r-project.org/projects/vpa/][here]].
+* News
+#+INCLUDE: "NEWS"
