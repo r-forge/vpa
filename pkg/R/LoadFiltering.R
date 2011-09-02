@@ -1,6 +1,6 @@
 
-LoadFiltering <- function(file, datadir=NULL, filtering=TRUE, QUAL=20, DP=10, GQ=20, FILTER=NULL, tabix="tabix", parallel=FALSE, pn=4, type=NULL, ...)UseMethod("LoadFiltering")
-LoadFiltering.default <- function(file, datadir=NULL, filtering=TRUE, QUAL=20, DP=10, GQ=20, FILTER=NULL, tabix="tabix", parallel=FALSE, pn=4, type=NULL, ...){
+LoadFiltering <- function(file, datadir=NULL, filtering=TRUE, alter.PL=NULL, QUAL=20, DP=10, GQ=20, FILTER=NULL, tabix="tabix", parallel=FALSE, pn=4, type=NULL, ...)UseMethod("LoadFiltering")
+LoadFiltering.default <- function(file, datadir=NULL, filtering=TRUE, alter.PL=NULL, QUAL=20, DP=10, GQ=20, FILTER=NULL, tabix="tabix", parallel=FALSE, pn=4, type=NULL, ...){
   samples <- as.matrix(read.table(file, head=FALSE))
   if(!is.null(datadir)){
     vfilepath <- file.path(datadir, samples[,3])
@@ -15,7 +15,7 @@ LoadFiltering.default <- function(file, datadir=NULL, filtering=TRUE, QUAL=20, D
     cat(paste("Load variants for ", samples[i, 1], ":\n", sep=""))
     m1 <- read.vcf(file=vfilepath[i]) #read vcf
     pos1 <- cbind(m1$CHROM, m1$POS)
-    if(filtering){ #fileter
+    if(filtering){ 
       m1 <- filtervcf(m1, alter=NULL, QUAL=QUAL, DP=DP, GQ=GQ, FILTER=FILTER, INDEL=NULL)
     }
     vcfdata[[i]] <- m1
@@ -59,14 +59,20 @@ LoadFiltering.default <- function(file, datadir=NULL, filtering=TRUE, QUAL=20, D
     }
     names(seqdata) <- samples[,1]
   }
+
   #INDEX
   POS <- paste(pos[,1], pos[,2], sep=":")
   vartf <- lapply(vcfdata, function(x)POS %in% paste(x$CHROM, x$POS, sep=":"))
   if(exists("seqdata")){
-    covtf <- list()
+   # covtf <- list()
     for(n in 1:nrow(samples)){
       p1 <- paste(seqdata[[n]]$CHROM, seqdata[[n]]$POS, sep=":")
       p1tf <- ifelse(as.numeric(seqdata[[n]]$INFO[, "DP"])>=DP, TRUE, NA)
+      if(!is.null(alter.PL)){
+        p1pl <- filtervcf(seqdata[[n]], alter=TRUE, alter.PL=alter.PL, QUAL=0, DP=DP)
+        plp <- setdiff(paste(p1pl$CHROM, p1pl$POS, sep=":"), paste(vcfdata[[n]]$CHROM, vcfdata[[n]]$POS, sep=":"))
+        vartf[[n]][match(plp, POS)] <- "PL"
+      }
       p1tf <- unique(cbind(p1, p1tf))
       cov1tf <- p1tf[match(POS, p1tf[,1]), 2]
       vartf[[n]][is.na(cov1tf)] <- NA

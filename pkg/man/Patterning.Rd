@@ -7,7 +7,7 @@
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-Patterning(x, pattern, paired=FALSE, not.covered=NULL)
+Patterning(x, pattern, paired=FALSE, not.covered=NULL, var.PL=NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -26,6 +26,10 @@ Patterning(x, pattern, paired=FALSE, not.covered=NULL)
     considered as variant. If FALSE, such low-coverage positions will be
     considered as reference. If it's NULL (default), such low-coverage positions
     will be filtered.}
+  \item{var.PL}{PL is used to label possible variant when
+    \code{alter.PL} is not NULL in the function LoadFiltering. If TRUE,
+    possible variants are considered as true variants. If FALSE,
+    possible variants are considered as nonvariants.}
 }
 \details{
    This function is used to extract variant with user-specified frequency pattern across study subjects. 

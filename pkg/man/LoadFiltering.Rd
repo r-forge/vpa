@@ -11,7 +11,7 @@
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-LoadFiltering(file, datadir=NULL, filtering=TRUE, QUAL=20,
+LoadFiltering(file, datadir=NULL, filtering=TRUE, alter.PL=NULL, QUAL=20,
 DP=10, GQ=20, FILTER=NULL, tabix="tabix", parallel=FALSE, pn=4,
 type=NULL, ...)
 }
@@ -27,6 +27,9 @@ type=NULL, ...)
     provided in the annotation file.}
   \item{filtering}{Logical value. Whether to filter VCF data by
     specified quality criteria.}
+  \item{alter.PL}{Phred-scaled genotype likelihoods to define a
+    variant. If it's not NULL, PL scores from sequence-level calls are
+    used to decide a variant besides from variant calls.}
   \item{QUAL}{Phred-like quality score cut-off to filter variants when
     \code{filtering} is TRUE.}
   \item{DP}{Sequencing depth cut-off to filter variants when

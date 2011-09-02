@@ -1,5 +1,5 @@
 #Rscript for filter vcf data, only for one sample
-filtervcf <- function(x, alter=TRUE, alter.PL=20, QUAL=20, DP=10, GQ=NULL, FILTER=NULL, INDEL=NULL){
+filtervcf <- function(x, alter=NULL, alter.PL=20, QUAL=20, DP=10, GQ=NULL, FILTER=NULL, INDEL=NULL){
   if(class(x)!="vcf"){
     stop("x is not a vcf object")
   }
@@ -8,6 +8,7 @@ filtervcf <- function(x, alter=TRUE, alter.PL=20, QUAL=20, DP=10, GQ=NULL, FILTE
   }else{
     index1 <- as.numeric(x$QUAL)>=QUAL & as.numeric(x$INFO[,"DP"])>=DP
   }
+  
   if(!is.null(GQ)){
     index2 <- as.numeric(x[[length(x)]][, "GQ"])>=GQ
   }else{
@@ -22,19 +23,25 @@ filtervcf <- function(x, alter=TRUE, alter.PL=20, QUAL=20, DP=10, GQ=NULL, FILTE
     if(alter){
       # index4 <- x$REF != x$ALT
       PL <- x$SAMPLE1[,"PL"]
-      PL1 <- unlist(lapply(strsplit(PL, split=","), function(x)x[[1]]))
+      #PL1 <- unlist(lapply(strsplit(PL, split=","), function(x)x[[1]]))
       PL <- lapply(strsplit(PL, split=","), function(x)x)
-      index4 <- lapply(PL, function(x)as.numeric(x)[1]>=20 | sum(as.numeric(x)[-1]<20)>0)
+      index4 <- lapply(PL, function(x)as.numeric(x)[1]>=alter.PL | sum(as.numeric(x)[-1]<alter.PL)>0)
+      index4[is.na(index4)] <- FALSE
       index4 <- unlist(index4) 
     }else{#not mutate
       PL <- x$SAMPLE1[,"PL"]
-      PL1 <- unlist(lapply(strsplit(PL, split=","), function(x)x[[1]]))
-      index4 <- as.numeric(PL1)<20
+      #PL1 <- unlist(lapply(strsplit(PL, split=","), function(x)x[[1]]))
+      #index4 <- as.numeric(PL1)<alter.PL
+      PL <- lapply(strsplit(PL, split=","), function(x)x)
+      index4 <- lapply(PL, function(x)as.numeric(x)[1]<alter.PL & sum(as.numeric(x)[-1]>=alter.PL)==length(x[-1]))
+      index4[is.na(index4)] <- FALSE
+      index4 <- unlist(index4)
     }
   }else{
     index4 <- TRUE
   }
   index <- index1 & index2 & index3 & index4
+  index[is.na(index)] <- FALSE
   x$CHROM <- x$CHROM[index]
   x$POS <- x$POS[index]
   x$ID <- x$ID[index]

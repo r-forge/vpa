@@ -36,14 +36,25 @@ read.vcf.default <- function(file, VCF=NULL, INFOID=NULL, FORMATID=NULL, ...){
     INFOh <- vcfhead[grep("##INFO", vcfhead)]
     INFOID <- unlist(lapply(strsplit(INFOh, split="=|,"), function(x)x[3]))
   }
-  info1 <- strsplit(vcfdata$INFO, split=";|=")
-  info2 <- lapply(info1, function(x)x[match(INFOID, x)+1])
-  INFO <- matrix(unlist(info2), ncol=length(INFOID), byrow=TRUE)
-  colnames(INFO) <- INFOID
+  info1 <- strsplit(vcfdata$INFO, split=";")
+  
+  info1n <- lapply(info1, function(a)sapply(a, function(x)unlist(strsplit(x, split="="))[[1]]))
+  info1v <- lapply(info1, function(a)sapply(a, function(x){inn <- unlist(strsplit(x, split="=")); ifelse(length(inn)>1, inn[2], TRUE)}))
+
+  info2 <- sapply(1:length(info1), function(x)info1v[[x]][match(INFOID, info1n[[x]])])
+  info2 <- t(rbind(info2))
+  colnames(info2) <- INFOID
+  
+##   info2 <- lapply(info1, function(x)x[match(INFOID, x)+1])  
+##   info2 <- lapply(info1, function(x)x[match(INFOID, x)+1])
+##   INFO <- matrix(unlist(info2), ncol=length(INFOID), byrow=TRUE)
+##   colnames(INFO) <- INFOID
+
   if("INDEL" %in% INFOID){
-    INFO[, "INDEL"] <- ifelse(is.na(INFO[,"INDEL"]), FALSE, TRUE)
+    info2[, "INDEL"] <- ifelse(is.na(info2[,"INDEL"]), FALSE, TRUE)
   }
-  vcfdata$INFO <- INFO
+  
+  vcfdata$INFO <- info2
   #SAMPLE
   if(is.null(FORMATID)){
     Sh <- vcfhead[grep("##FORMAT", vcfhead)]

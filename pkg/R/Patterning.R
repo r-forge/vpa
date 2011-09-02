@@ -1,4 +1,4 @@
-Patterning <- function(x, pattern, paired=FALSE, not.covered=NULL){
+Patterning <- function(x, pattern, paired=FALSE, not.covered=NULL, var.PL=NULL){
   if(sum(c("vcflist", "VarIndex", "Samples") %in% names(x))<3){
     stop("Please check input data!")
   }
@@ -19,6 +19,15 @@ Patterning <- function(x, pattern, paired=FALSE, not.covered=NULL){
   }else if(not.covered==FALSE){
     vari[is.na(vari)] <- FALSE
   }
+  #PL
+  if(is.null(var.PL)){
+    vari <- vari
+  }else if(var.PL==TRUE){
+    vari[vari=="PL"] <- TRUE
+  }else if(var.PL==FALSE){
+    vari[vari=="PL"] <- FALSE
+  }
+  vari <- vari==TRUE
   
   AltF <- t(apply(vari, 1, function(x)tapply(x, samples[,2], function(x)sum(mean(x)))))
   pattern <- pattern[,match(colnames(AltF), colnames(pattern))]

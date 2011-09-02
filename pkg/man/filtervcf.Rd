@@ -9,7 +9,7 @@
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-filtervcf(x, alter = TRUE, alter.PL=20, QUAL = 20, DP = 10, GQ = NULL,
+filtervcf(x, alter = NULL, alter.PL=20, QUAL = 20, DP = 10, GQ = NULL,
 FILTER = NULL, INDEL = NULL)
 }
 %- maybe also 'usage' for other objects documented here.
@@ -17,10 +17,10 @@ FILTER = NULL, INDEL = NULL)
   \item{x}{A VCF object for filtering.
 %%     ~~Describe \code{x} here~~
 }
-  \item{alter}{Logical value. If TRUE, the positions of interest are kept. If FALSE, the positions of interest are discarded.
+  \item{alter}{Logical value. If TRUE, the variant positions are kept. If FALSE, the variant positions are discarded. If NULL, the option will be ignored.
 %%     ~~Describe \code{alter} here~~
 }
-\item{alter.PL}{Phred-scaled genotype likelihoods of variant call.}
+\item{alter.PL}{Phred-scaled genotype likelihoods of variant call to define a variant.}
   \item{QUAL}{phred-scaled variant likelihoods of variant call.
 %%     ~~Describe \code{QUAL} here~~
 }

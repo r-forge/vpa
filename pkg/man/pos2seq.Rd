@@ -2,7 +2,7 @@
 \alias{pos2seq}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{Positions to sequencing calls}
-\description{Function to retrieve variant or sequence call position of interest
+\description{Function to retrieve variants or sequence calls of interested positions
   from tabix indexed files.
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }

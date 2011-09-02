@@ -13,8 +13,8 @@
 \tabular{ll}{
 Package: \tab VPA\cr
 Type: \tab Package\cr
-Version: \tab 0.2.2\cr
-Date: \tab 2011-07-23\cr
+Version: \tab 0.2.4\cr
+Date: \tab 2011-08-31\cr
 License: \tab GPL-2\cr
 LazyLoad: \tab yes\cr
 }
