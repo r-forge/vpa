@@ -27,7 +27,10 @@ b)To install developing version of Rsamtools:
 	- The function scanTabix in the package Rsamtools can be invoked by the argument tabix=NULL instead.
 Tabix is recommended for installation as it runs more efficiently than Rsamtools in current version.
 * Installation
-install.packages("VPA", repos="http://R-Forge.R-project.org")
+Within R:
+##+begin_src R
+> install.packages("VPA", repos=c("http://R-Forge.R-project.org", "http://cran.r-project.org"))
+##+end_src
 * Project summary
 The project summary page you can find [[http://r-forge.r-project.org/projects/vpa/][here]].
 * News
