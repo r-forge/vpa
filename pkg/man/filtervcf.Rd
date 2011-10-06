@@ -9,18 +9,22 @@
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-filtervcf(x, alter = NULL, alter.PL=20, QUAL = 20, DP = 10, GQ = NULL,
-FILTER = NULL, INDEL = NULL)
+filtervcf(vcf, alter = NULL, alter.PL=20, alter.AD=3, alter.ADP=NULL,
+QUAL = 20, DP = c(10,500), GQ = NULL, FILTER = NULL, INDEL = NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{x}{A VCF object for filtering.
+  \item{vcf}{A VCF object for filtering.
 %%     ~~Describe \code{x} here~~
 }
   \item{alter}{Logical value. If TRUE, the variant positions are kept. If FALSE, the variant positions are discarded. If NULL, the option will be ignored.
 %%     ~~Describe \code{alter} here~~
 }
 \item{alter.PL}{Phred-scaled genotype likelihoods of variant call to define a variant.}
+\item{alter.AD}{The minimum depth of alter allele when alter is TRUE. The
+  alt allel depths are read from AD (GATK) or DP4 (Samtools) in the VCF
+  data.}
+\item{alter.ADP}{The minimum depth pecentage of alter allele.}
   \item{QUAL}{phred-scaled variant likelihoods of variant call.
 %%     ~~Describe \code{QUAL} here~~
 }
@@ -41,7 +45,9 @@ FILTER = NULL, INDEL = NULL)
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{
-  The input and output variant data are both VCF object.
+  The input vcf data will be filtered by user-specified quality
+  criteria. A list including filtered vcf data and dropped vcf data will
+  return.
 %%  ~Describe the value returned
 %%  If it is a LIST, use
 %%  \item{comp1 }{Description of 'comp1'}
@@ -52,7 +58,7 @@ FILTER = NULL, INDEL = NULL)
 %% ~put references to the literature/web site here ~
 }
 \author{
-  Qiang Hu%, Dan Wang, Li Yan, Song Liu
+  Qiang Hu
 %%  ~~who you are~~
 }
 \note{
@@ -70,7 +76,7 @@ FILTER = NULL, INDEL = NULL)
 #Filter alignment artifacts to get promising SNP
 vcffile <- system.file("extdata", "1151HZ0001.flt.vcf", package="VPA")
 vcfdata <- read.vcf(vcffile)
-vcflt <- filtervcf(vcfdata, alter=TRUE, QUAL=20, DP=10, GQ=20, INDEL=FALSE)
+vcflt <- filtervcf(vcfdata, alter=TRUE, alter.AD=3, QUAL=20, DP=c(10,500), GQ=20, INDEL=FALSE)$filtered
 write.vcf(vcflt)
 
 }

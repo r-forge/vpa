@@ -1,8 +1,8 @@
 Package: VPA
 Type: Package
 Title: Variant Pattern Analyzer for next-generation sequencing study
-Version: 0.2.4
-Date: 2011-08-31
+Version: 0.3.1
+Date: 2011-10-5
 Author: Qiang Hu
 Maintainer: Qiang Hu <huqmail@gmail.com>
 Depends: snowfall

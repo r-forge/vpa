@@ -1,0 +1,180 @@
+%\VignetteIndexEntry{An R package VPA}
+\documentclass[a4paper]{article}
+\usepackage{times}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage[authoryear,round]{natbib}
+\bibliographystyle{plainnat}
+
+\title{An introduction to VPA}
+\author{Qiang Hu}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\section{Introduction}
+\texttt{VPA} (Variant Pattern Analyzer) is an R package for prioritizing variants with user-specified frequency pattern from multiple study subjects in next generation sequencing study. The package starts from individual files of sequence and variant calls and extract variants with user-specified frequency pattern across the study subjects of interest. Positional level quality criteria including phred-like quality score and sequencing depth can be incorporated into variant extraction.  It can be used in studies with matched pair design as well as studies with multiple distinct groups of subjects. Written in open source R environment, it provides the flexibility for users to adopt, extend and customize the functionality for their specific needs. 
+
+The input for VPA consists basically of two types of files for each sample subject, containing position-level information of variant calls (required) and sequence calls (optional). The specific format of input files is Variant Call Format (VCF). VCF format has been widely used in the next-generation sequencing studies. The variant and sequence call data in VCF format can be generated using popular SAMtools or GATK. It contains quality information of all sequenced positions, such as sequencing depth and phred-like quality score.  
+
+The \texttt{VPA} package has been implemented in both sequential mode and parallel mode. %We provide a batch method to analyze variants in certain frequency pattern. 
+
+First of all, the package should be installed and loaded.
+
+<<initialize>>=
+library(VPA)
+@
+A test data set is available in the sub-directory `extdata' of package `VPA'.
+<<setwd>>=
+dirpath <- system.file('extdata', package='VPA')
+@ 
+\section{Work flow}
+For a next-generation sequencing study, samples from different sources can often be classified into groups with distinct phenotype. For example, In an application of three-group design, samples can assigned to group with aggressive phenotype, group with benign phenotype, and group with normal phenotype. Variants with certain frequency pattern relating to phenotype status of groups could be of interest for prioritization, such as recurrent in group with aggressive phenotype, not recurrent in group with benign phenotype, and not observed in group with normal phenotype.
+
+It takes three simple steps to extract the variants with user-specified frequency pattern and quality criteria.
+
+\subsection{Quality filtering}
+The first step is to load variant and sequence call data in VCF format and perform position-level quality filtering. The function \texttt{LoadFiltering} is designed to conduct this preprocessing procedure. The \texttt{index1.txt} file contains the annotation information of each sample. Each row is for one sample. The four columns are separated by tab, including sample name (required), group status (required), variant call file name (required) and sequence call file name (optional). Sample name column lists the sample name. Group status column lists status (e.g., aggressive, benign or normal) of group each sample belongs to. Variant call file name column lists the path of VCF formatted variant call file. The optional sequence call file name column lists the path of compressed VCF sequence call file. {\it Due to its high volume nature, the optional sequence call data in tab-delimited VCF formats is generally compressed by bgzip program and can be efficiently retrieved through tabix program from open-source SAMtool package ( http://samtools.sourceforge.net/tabix.shtml ). As a result, tabix should be installed if the optional sequence call checking is performed. The installation path of tabix could be specified in the optional argument of \texttt{LoadFiltering} function if it is not in the PATH system environment.}
+
+<<preprocessing>>=
+read.table(file.path(dirpath, 'index1.txt'), sep='\t')
+varflt <- LoadFiltering(file.path(dirpath, 'index1.txt'), datadir=dirpath, filtering=TRUE, alter.PL=20, alter.AD=3, alter.ADP=NULL, QUAL=20, DP=c(10, 500), GQ=20, tabix="tabix", parallel=FALSE)
+@ 
+The arguments ``filtering'' is used to decide whether position-level quality filtering should be conducted. For each genomic position of variant call, VPA will retrieve variant call information from the subject(s) with variant called at this position. If the optional sequence call files are specified in the \texttt{index1.txt} file, it will take advantage of installed tabix function to retrieve sequence call information overlapping variant call position from the subject(s) without variant called at the same position. It will filter out the variant positions which don't reach the user-specified quality criteria from further analysis. The quality criteria, including sequencing depth and phred-like quality score, can be set in the optional argument of \texttt{LoadFiltering} function. 
+
+By default, the phred-like quality score is set at $\ge$ 20 and the sequencing depth is set at $\ge$ 10x and $\le$ 500x. PL (Phred-scaled genotype likelihoods) is a score for possible genotype. The alter.PL=20 is used to find possible variants as control to reduce false positive results. The arguments 'alter.AD' and 'alter.AP' define the threshold of altered allele for the variants. In this example, 'alter.AD=3' refers to the variants should at least have 3 altered alleles. More details about the filtering criteria can be find at 'help(filtervcf)'.
+<<preprocessing>>=
+varflt
+@ 
+\subsection{Specifying Pattern}
+The pattern of variant frequency can be customized by user according to the experiment design. The minimum and maximum frequency value in each group are sufficient to make up of a pattern matrix. In the test data set, there are 4 case samples and 2 control samples respectively. It is an unpaired design. To prioritize variants that occur in at least one case sample but do not occur in any of the control samples, the minimum and maximum frequency in case group will be set as 1/4 and 1, respectively. The minimum and maximum frequency in control group will be both set as 0.
+<<pattern>>=
+pattern <- cbind(A=c(1/4,1), B=c(0,0))
+pattern
+@ 
+The column names of the resulted frequency matrix correspond to the group names in the \texttt{index1.txt} file. The first row of the matrix lists the minimum frequency values of each group and the second row of the matrix lists the maximum frequency values of each group.
+
+\subsection{Extracting variants}
+Once an object for the list of qualified genomic position of variant call is obtained and the frequency pattern is defined, the last step is to extract variants with desired pattern. The \texttt{Patterning} function is designed for this purpose, with the the object of qualified variants from the first step and the object of customized pattern from the second step as input for the function. The argument 'not.covered=NULL' will remove the positions with low depth reads. The 'var.PL=TRUE' is used to label possible variants as true variants when filtering positions with specified pattern. This two arguments can be used to reduce false positive results.
+<<variants>>=
+varpat1 <- Patterning(varflt, pattern, paired=FALSE, not.covered=NULL, var.PL=TRUE)
+varpat1
+@ 
+The result is a \texttt{varlist} object, including \texttt{VarVCF}, \texttt{VarFrequency}, \texttt{Pattern} and \texttt{Samples}. \texttt{VarVCF} is a list of VCF format variant data fitting the specified frequency pattern and quality criteria. \texttt{VarFrequency} is a matrix recording every variant's frequency in each group.
+
+\section{Parallel mode}
+The first step of the \texttt{VPA} package, \textit{i.e.}, performing thorough position-level quality filtering using both variant and sequence call files, is the most time-consuming part. By default, the function \texttt{LoadFiltering} conduct quality filtering in a sequential mode. To speed up this step, We also implement the function to run the filtering in a parallel model. To run the \texttt{LoadFiltering} function in a parallel mode, one can set argument 'parallel=TRUE'.
+<<parallel>>=
+varflt <- LoadFiltering(file.path(dirpath, 'index1.txt'), datadir=dirpath, filtering=TRUE, alter.PL=20, alter.AD=3, alter.ADP=NULL, QUAL=20, DP=c(10, 500), GQ=20, tabix='tabix', parallel=TRUE, pn=2)
+@ 
+The argument 'pn=2' set the number of CPUs to be used. The function in parallel mode is implemented by the open source R package 'snowfall'. More arguments and details to run the function in parallel can be found in the manual of function \texttt{sfInit}.
+
+Note that \texttt{VPA} package also allows user to perform fast quality filtering using only the variant call files. This can be performed by supplying the variant call files only in the \texttt{index1.txt}.
+
+\section{Case study}
+\subsection{Unpaired multi-groups design}
+In an application of three-group design (e.g., group with aggressive phenotype, group with benign phenotype, group with normal phenotype) with 2 subjects per group, one might want to extract variants recurrent in aggressive phenotype group (i.e., frequency $\ge$ 0.5), not recurrent in benign phenotype group (i.e., frequency $\le$ 0.5), and not observed in normal phenotype group at all (i.e., frequency =0.0). The \texttt{index2.txt} file shows such a three-group design.
+<<case2>>=
+read.table(file.path(dirpath, 'index2.txt'), sep='\t')
+@ 
+The first step is to load the VCF format data and perform position-level quality filtering. By default, the phred-like quality score is set at $\ge$ 20 and the sequencing depth is set at $\ge$ 10x. User can set the quality criteria in the optional argument of \texttt{LoadFiltering} function.
+<<case2>>=
+varflt <- LoadFiltering(file=file.path(dirpath, 'index2.txt'), datadir=dirpath, filtering=TRUE, alter.PL=20, alter.AD=3, QUAL=20, DP=c(10,500), GQ=20, tabix='tabix')
+@ 
+For aggressive phenotype group, the minimum and maximum frequency will be set as 0.5 and 1, respectively. For benign phenotype group, the minimum and maximum frequency will be set as 0 and 0.5, respectively. For normal phenotype group, both the minimum and maximum frequency will be set as 0.  
+<<case2>>=
+pattern <- cbind(A=c(0.5,1), B=c(0,0.5), C=c(0,0))
+@ 
+The variants with with such a frequency pattern can be extracted using \texttt{Patterning} function.
+<<case2>>=
+varpat2 <- Patterning(varflt, pattern, not.covered=NULL, var.PL=TRUE)
+varpat2
+@
+\subsection{Paired design}
+Paired design sequencing experiment can be used to identify somatic type of variant (i.e., variants occurring in cancer case subject but not in matched cancer-free subject). Recurrent somatic variants can be of great interests for follow up analysis. In a paired design sequencing study, \texttt{VPA} package can be used to identify somatic type of variants with the user customized frequency pattern. The ``index3.txt'' file shows a example of paired design with two cases and two matched controls. The identity of case to its matched control can be determined by the sample name column. 
+
+<<case3>>=
+read.table(file.path(dirpath, 'index3.txt'), sep='\t')
+@ 
+The same three simple steps as described above can be used to extract the variants of interest.
+<<case3>>=
+varflt <- LoadFiltering(file=file.path(dirpath, 'index3.txt'), datadir=dirpath, filtering=TRUE, alter.PL=20, alter.AD=3, QUAL=20, DP=c(10,500), GQ=20, tabix='tabix')
+pattern <- cbind(case=c(0.5,1), control=c(0,0))
+varpat3 <- Patterning(varflt, pattern, paired=TRUE, not.covered=NULL, var.PL=TRUE)
+varpat3
+@ 
+
+\section{Summary results}
+\subsection{Variant frequency}
+Several functions are also provided to output the variant analysis results. For example, the function \texttt{vcfreq} can be used to summarize the variant frequency of a \texttt{varlist} object. We take the result data ``varpat1'' as an example:
+<<vcfreq>>=
+vfreq <- vcfreq(varpat1, method='fisher.test')
+head(vfreq)
+@ 
+The resulted matrix lists reference, genotypes, altered allele frequencies and p-value across the study groups of all positions. The positions without variants are marked with ''.''. The method 'fisher.test' or 'chisq.test' can be used to test the frequency difference of altered alleles between groups.
+\subsection{Gene frequency}
+Variants can be mapped to gene level to find the genes with different frequencies between groups. The function \texttt{Pos2Gene} can be used to annotate a position in reference genome to 'gene' level or 'exon' level. The annotation data come from UCSC reference genome table ``refFlat''. For example,
+<<gefreq>>=
+Pos2Gene('1', '949053', level='exon', ref='hg19')
+@ 
+This position is in the intron region of gene ``ISG15''. The altered frequency in gene level can be summerized by the function \texttt{gefreq}. We take the same data ``varpat1'' for example. The variants of each sample will be annotated and the gene frequencies will be calculated.
+<<gefreq>>=
+gfreq <- gefreq(varpat1, level='exon', ref='hg19', method='fisher.test')
+gfreq$frequency
+head(gfreq$annotation[[1]])
+@
+\subsection{Variant information}
+For position(s) of interest, the function \texttt{subvcf} can be used to retrieve the detailed variant information. For example, the above position ``1:949053" and ``1:970836" contain variant call in sample ``1151HZ0001". 
+<<check>>=
+vcf1 <- subvcf(varpat1$VarVCF[[1]], CHRPOS=c('1:949053', '1:970836'))
+write.vcf(vcf1, file='')
+@
+The detailed sequence call information can also be retrieved from samples without variant called at the same position.
+<<check>>=
+vcf2 <- pos2seq(Pos=rbind(c('1', '949053'), c('1', '970836')), Seqfile=file.path(dirpath, varpat1$Samples[5,4]))
+vcf2$vcf
+@ 
+\subsection{Output}
+The function \texttt{write.vcf} can be used to export the identified variant with user-specified frequency pattern and quality criteria as a plain text file in VCF format. It can be used as input file for further analysis. 
+<<output>>=
+write.vcf(varpat1$VarVCF[[1]], file=tempfile())
+@
+\section{Database filtering}
+In order to find novel variants, the results can also be filtered by some public nucleotide variant databases, such as dbSNP and 1000 genome. The function \texttt{filterpos} can be used to filter variants with different type of data sets, including 'vcf', 'bed', 'gff' and user-specified position matrix. Here are examples to show how to filter variants with dbSNP and 1000 Genome.
+\subsection{dbSNP}
+The latest version of dbSNP database (dbSNP132) is available on UCSC genome. It can be downloaded at \url{http://hgdownload.cse.ucsc.edu/goldenPath/hg19/database/snp132.txt.gz}. The 2-5 columns of the data set can be extracted to build a bed-format file. The bed file is still too big to retrieve annotation. Thus 'tabix' is used to index this file for extracting information rapiddly. Here is an example for data preparing.
+\begin{verbatim}
+$wget http://hgdownload.cse.ucsc.edu/goldenPath/hg19/database/snp132.txt.gz
+$gzip -d -c snp132.txt.gz | cut -f 2-5 > snp132.bed
+$bgzip snp132.bed
+$tabix -p bed snp132.bed.gz
+\end{verbatim}
+In this section, we only use part of the dbSNP132 dataset as an example because the data set 'snp132.bed.gz' is too large to demonstrate.
+<<filterpos>>=
+vcf3 <- varpat1$VarVCF[[1]]
+vcf3F1 <- filterpos(vcf3, file=file.path(dirpath, 'dbSNP.bed.gz'), type='bed', tbi=TRUE, chr=TRUE, tabix='tabix')
+vcf3F1
+@ 
+The arguments 'type='bed'' and 'tbi=TRUE' are used to define the format of input file, which is in bed format and indexed by 'tabix'. The chromosome names in dbSNP have the prefix of ``chr'', so the argument 'chr' is set as 'TRUE'. There are 5 variants filtered out because they are annotated in dbSNP database, and 7 variants are left.
+\subsection{1000 Genome}
+The variants data released by 1000 Genome project are in indexed VCF format. The lastest version can be downloaded at \url{ftp://ftp-trace.ncbi.nih.gov/1000genomes/ftp/release/20101123/interim_phase1_release/}. The dat sets can be used directly as input file to filter variants. We also only use part of the dataset for example to filter the variants.
+<<filterpos>>=
+vcf3F2 <- filterpos(vcf3F1$filtered, file=file.path(dirpath, '1KG.vcf.gz'), type='vcf', tbi=TRUE, chr=FALSE, tabix='tabix')
+vcf3F2
+@ 
+There are 2 variants left and 5 variants are filtered out by 1000 Genome dataset. The left 2 variants meet our specified sequencing quality criteria and frequency pattern. Furthermore, they are novel variants without annotation in current databases.
+
+\section{Session information}
+<<sessioninfo>>=
+sessionInfo()
+@ 
+
+\end{document}
+>>=
+@ 
+>>=
+@ 

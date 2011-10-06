@@ -11,9 +11,9 @@
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-LoadFiltering(file, datadir=NULL, filtering=TRUE, alter.PL=NULL, QUAL=20,
-DP=10, GQ=20, FILTER=NULL, tabix="tabix", parallel=FALSE, pn=4,
-type=NULL, ...)
+LoadFiltering(file, datadir=NULL, filtering=TRUE, alter.PL=20,
+alter.AD=3, alter.ADP=NULL, QUAL=20, DP=c(10,500), GQ=20, FILTER=NULL,
+tabix="tabix", parallel=FALSE, pn=4, type=NULL, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -30,6 +30,8 @@ type=NULL, ...)
   \item{alter.PL}{Phred-scaled genotype likelihoods to define a
     variant. If it's not NULL, PL scores from sequence-level calls are
     used to decide a variant besides from variant calls.}
+  \item{alter.AD}{The minimum depth of alter allele.}
+  \item{alter.ADP}{The minimum depth percentage of alter allele.}
   \item{QUAL}{Phred-like quality score cut-off to filter variants when
     \code{filtering} is TRUE.}
   \item{DP}{Sequencing depth cut-off to filter variants when
@@ -104,9 +106,9 @@ type=NULL, ...)
 \examples{
 
 setwd(system.file("extdata", package="VPA"))
-varflt <- LoadFiltering(file="index1.txt", filtering=TRUE)
+varflt <- LoadFiltering(file="index1.txt", filtering=TRUE, alter.PL=20, alter.AD=3)
 pattern <- cbind(A=c(1/4,1), B=c(0,0))
-varRes1 <- Patterning(varflt, pattern)
+varRes1 <- Patterning(varflt, pattern, var.PL=TRUE)
 
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

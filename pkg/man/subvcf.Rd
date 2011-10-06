@@ -7,12 +7,12 @@
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-subvcf(x, CHR = NULL, POS = NULL, CHRPOS=NULL, samples = NULL, TF =
+subvcf(vcf, CHR = NULL, POS = NULL, CHRPOS=NULL, samples = NULL, TF =
 NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{x}{A vcf object data.
+  \item{vcf}{A vcf object data.
     %%     ~~Describe \code{x} here~~
   }
   \item{CHR}{Chromosome. To get the subset of input vcf data based on

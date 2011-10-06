@@ -7,21 +7,23 @@
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-vcfreq(x)
+vcfreq(vcf, method="fisher.test", ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{x}{A varlist object.
+  \item{vcf}{A varlist object.}
+  \item{method}{The allele frequency test method to be used. This must
+    be one of "fisher.test" and "chisq.test".}
+  \item{...}{More arguments for the test method.}
 %%     ~~Describe \code{file} here~~
-}
 }
 
 \details{
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{
-  A data frame to list the REF, ALT and frequecies of all
-  positions across study groups.
+  A data frame to list the REF, genotypes, alter allele frequecies and
+  p.value of all positions across study groups.
 
 %%  ~Describe the value returned
 %%  If it is a LIST, use
@@ -43,11 +45,12 @@ vcfreq(x)
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
+  \code{\link{gefreq}}
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
 ##read example vcf file in data directory.
-#vcfreq(varpat1)
+#vcfreq(varRes1)
 
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

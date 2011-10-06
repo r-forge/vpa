@@ -18,7 +18,11 @@ write.vcf.default <- function(x, file="", HEAD=TRUE, ...){
       info <- na.omit(c(info, paste(info1n, info1, sep="=")))
     }else{
       info1n <- names(info1)
-      info <- paste(info1n, info1, sep="=")
+      if(!is.null(info1n)){
+        info <- paste(info1n, info1, sep="=")
+      }else{
+        info <- info1
+      }
     }
     info <- paste(info, collapse=";")
     INFOc <- c(INFOc, info)

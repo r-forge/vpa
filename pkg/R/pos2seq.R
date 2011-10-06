@@ -8,9 +8,10 @@ pos2seq <- function(Pos, Seqfile, file="", tabix="tabix", region=5000){  #Pos: 2
     header <- headerTabix(tbx)$header
   }else{
   #read header
-    pos1 <- paste(Pos[1,1], ":", Pos[1,2], "-", Pos[1,2], sep="")
-    header <- system(paste(tabix, " -h", Seqfile, pos1, sep=" "), intern=TRUE)
-    header <- header[-length(header)]
+    pos1 <- "1:0-0"
+    con <- pipe(paste(tabix, "-h", Seqfile, pos1, sep=" "))
+    header <- readLines(con)
+    close(con)
     
     Pos2region <- function(pos){
       paste(as.character(pos[1]), ":", as.integer(pos[2]), "-", as.integer(pos[2]), sep="")
@@ -24,28 +25,45 @@ pos2seq <- function(Pos, Seqfile, file="", tabix="tabix", region=5000){  #Pos: 2
     P2Seq <- list()
     if(length(regs)==1){
       con <- pipe(paste(tabix, Seqfile, paste(PosReg, collapse=" "), sep=" "))
-      P2Seq[[1]] <- read.table(con, sep="\t") 
+      if(length(scan(con, what="", n=1, quiet=TRUE))>0){
+        P2Seq[[1]] <- read.table(con, sep="\t")
+      }else{
+        P2Seq[[1]] <- NULL
+      }
     }else{
       for(i in 1:(length(regs)-1)){
         con <- pipe(paste(tabix, Seqfile, paste(PosReg[(regs[i]):(i*region)], collapse=" "), sep=" "))
-        pos2seq <- read.table(con, sep="\t")
-        P2Seq[[i]] <- pos2seq
+        if(length(scan(con, what="", n=1, quiet=TRUE))>0){
+          P2Seq[[i]] <- read.table(con, sep="\t")
+        }else{
+          P2Seq[[i]] <- NULL
+        }
+        #pos2seq <- read.table(con, sep="\t")
+        #P2Seq[[i]] <- pos2seq
       #print(i)
       }
       con <- pipe(paste(tabix, Seqfile, paste(PosReg[max(regs):length(PosReg)], collapse=" "), sep=" "))
-      pos2seq <- read.table(con, sep="\t")
+      if(length(scan(con, what="", n=1, quiet=TRUE))>0){
+        pos2seq <- read.table(con, sep="\t")
+      }else{
+        pos2seq <- NULL
+      }
+      #pos2seq <- read.table(con, sep="\t")
       P2Seq[[length(regs)]] <- pos2seq
     }  
     seq1 <- c() 
+    if(length(P2Seq)>0){
     for(i in 1:length(P2Seq)){
-      seq1 <- rbind(seq1, P2Seq[[i]])
+        seq1 <- rbind(seq1, P2Seq[[i]])
+      }
+      seq1 <- as.matrix(seq1)
     }
-    seq1 <- as.matrix(seq1)
   }
+  seq1 <- unique(seq1)
   if(length(grep("^#CHROM", header))>0){
     colnames(seq1) <- strsplit(tail(header, n=1), split="\t|#")[[1]][-1]
   }
-  
+#  closeAllConnections()  
   if (file == ""){
     list(header=header, vcf=seq1)
   }else{

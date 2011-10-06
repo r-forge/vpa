@@ -1,3 +1,15 @@
+Date:   Fri Sep 30
+    version 0.3.0.
+    Updata functions:
+	filtervcf, LoadFiltering: Add min, max for DP. Add alter.AD, cutoff for alt allele depth. Add alter.ADP, percentage of AD.
+	vcfreq: add genotype. change to allele frequency.  add statistical test, fisher.test and chisq.test.
+    Add functions:
+	getref, Pos2Gene. Functions to map positions to genes.    
+	filterpos: filter specified positions, such as dbSNP, 1K genome, customized vcf. Input file can be vcf, bed, gff and data.frame.
+	gefreq: calculate gene level frequencies between groups and annotate variants to genes.
+    Vignette:
+	Modified VPA.Rnw. Add a new section about dbSNP/1000Genome filtering. Add more arguments in functions.
+    Bugs fixed.
 Date:   Wed Aug 31
     version 0.2.4.
     Add PL to LoadFiltering and Patterning. Prossible variants can be filtered now.

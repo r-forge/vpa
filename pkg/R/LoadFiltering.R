@@ -1,6 +1,6 @@
 
-LoadFiltering <- function(file, datadir=NULL, filtering=TRUE, alter.PL=NULL, QUAL=20, DP=10, GQ=20, FILTER=NULL, tabix="tabix", parallel=FALSE, pn=4, type=NULL, ...)UseMethod("LoadFiltering")
-LoadFiltering.default <- function(file, datadir=NULL, filtering=TRUE, alter.PL=NULL, QUAL=20, DP=10, GQ=20, FILTER=NULL, tabix="tabix", parallel=FALSE, pn=4, type=NULL, ...){
+LoadFiltering <- function(file, datadir=NULL, filtering=TRUE, alter.PL=20, alter.AD=3, alter.ADP=NULL, QUAL=20, DP=c(10,500), GQ=20, FILTER=NULL, tabix="tabix", parallel=FALSE, pn=4, type=NULL, ...)UseMethod("LoadFiltering")
+LoadFiltering.default <- function(file, datadir=NULL, filtering=TRUE, alter.PL=20, alter.AD=3, alter.ADP=NULL, QUAL=20, DP=c(10,500), GQ=20, FILTER=NULL, tabix="tabix", parallel=FALSE, pn=4, type=NULL, ...){
   samples <- as.matrix(read.table(file, head=FALSE))
   if(!is.null(datadir)){
     vfilepath <- file.path(datadir, samples[,3])
@@ -16,7 +16,7 @@ LoadFiltering.default <- function(file, datadir=NULL, filtering=TRUE, alter.PL=N
     m1 <- read.vcf(file=vfilepath[i]) #read vcf
     pos1 <- cbind(m1$CHROM, m1$POS)
     if(filtering){ 
-      m1 <- filtervcf(m1, alter=NULL, QUAL=QUAL, DP=DP, GQ=GQ, FILTER=FILTER, INDEL=NULL)
+      m1 <- filtervcf(m1, alter=TRUE, alter.PL=alter.PL, alter.AD=alter.AD, alter.ADP=alter.ADP, QUAL=QUAL, DP=DP, GQ=GQ, FILTER=FILTER, INDEL=NULL)$filtered
     }
     vcfdata[[i]] <- m1
     pos <- unique(rbind(pos, pos1))
@@ -67,9 +67,9 @@ LoadFiltering.default <- function(file, datadir=NULL, filtering=TRUE, alter.PL=N
    # covtf <- list()
     for(n in 1:nrow(samples)){
       p1 <- paste(seqdata[[n]]$CHROM, seqdata[[n]]$POS, sep=":")
-      p1tf <- ifelse(as.numeric(seqdata[[n]]$INFO[, "DP"])>=DP, TRUE, NA)
-      if(!is.null(alter.PL)){
-        p1pl <- filtervcf(seqdata[[n]], alter=TRUE, alter.PL=alter.PL, QUAL=0, DP=DP)
+      p1tf <- ifelse(as.numeric(seqdata[[n]]$INFO[, "DP"])>=DP[1], TRUE, NA)
+      if(!is.null(alter.PL)){ #possible variant
+        p1pl <- filtervcf(seqdata[[n]], alter=TRUE, alter.PL=alter.PL, alter.AD=NULL, alter.ADP=NULL, QUAL=0, DP=DP)$filtered
         plp <- setdiff(paste(p1pl$CHROM, p1pl$POS, sep=":"), paste(vcfdata[[n]]$CHROM, vcfdata[[n]]$POS, sep=":"))
         vartf[[n]][match(plp, POS)] <- "PL"
       }

@@ -16,7 +16,7 @@ importFrom(stats, as.ts, coef, dendrapply, deviance, end, formula,
 importFrom(utils, as.person, browseURL, head, menu, read.table, str,
                       tail, toBibtex, write.table)
 
-export(pos2seq, read.vcf, write.vcf, vcfreq, subvcf, filtervcf, LoadFiltering, Patterning)
+export(pos2seq, read.vcf, write.vcf, vcfreq, subvcf, filtervcf, LoadFiltering, Patterning, getref, Pos2Gene, gefreq, filterpos)
 
 S3method(read.vcf, default)
 

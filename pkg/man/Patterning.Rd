@@ -27,8 +27,9 @@ Patterning(x, pattern, paired=FALSE, not.covered=NULL, var.PL=NULL)
     considered as reference. If it's NULL (default), such low-coverage positions
     will be filtered.}
   \item{var.PL}{PL is used to label possible variant when
-    \code{alter.PL} is not NULL in the function LoadFiltering. If TRUE,
-    possible variants are considered as true variants. If FALSE,
+    \code{alter.PL} is not NULL in the function LoadFiltering. When
+    filtering variants with specified frequency pattern, possible
+    variants are considered as variants if TRUE. If FALSE,
     possible variants are considered as nonvariants.}
 }
 \details{
