@@ -20,12 +20,26 @@ Patterning <- function(x, pattern, paired=FALSE, not.covered=NULL, var.PL=NULL){
     vari[is.na(vari)] <- FALSE
   }
   #PL
+  ## if(is.null(var.PL)){
+  ##   vari <- vari
+  ## }else if(var.PL==TRUE){
+  ##   vari[vari=="PL"] <- TRUE
+  ## }else if(var.PL==FALSE){
+  ##   vari[vari=="PL"] <- FALSE
+  ## }
+  group <- colnames(pattern)
   if(is.null(var.PL)){
     vari <- vari
-  }else if(var.PL==TRUE){
-    vari[vari=="PL"] <- TRUE
-  }else if(var.PL==FALSE){
-    vari[vari=="PL"] <- FALSE
+  }else{
+    if(length(var.PL)!=length(group)){
+      stop("The length of var.PL does not match")
+    }else{
+      for(i in 1:length(group)){
+        vari1 <- vari[,samples[,2]==group[i]]
+        vari1[vari1=="PL"] <- var.PL[i]
+        vari[,samples[,2]==group[i]] <- vari1
+      }
+    }
   }
   vari <- vari==TRUE
   
