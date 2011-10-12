@@ -27,19 +27,30 @@ tabix="tabix", parallel=FALSE, pn=4, type=NULL, ...)
     provided in the annotation file.}
   \item{filtering}{Logical value. Whether to filter VCF data by
     specified quality criteria.}
-  \item{alter.PL}{Phred-scaled genotype likelihoods to define a
-    variant. If it's not NULL, PL scores from sequence-level calls are
-    used to decide a variant besides from variant calls.}
-  \item{alter.AD}{The minimum depth of variant allele.}
-  \item{alter.ADP}{The minimum pecentage of read depth containing variant allele.}
-  \item{QUAL}{Phred-like quality score cut-off to filter variants when
-    \code{filtering} is TRUE.}
-  \item{DP}{Sequencing depth cut-off to filter variants when
-    \code{filtering} is TRUE.}
-  \item{GQ}{Phred-like genotype score cut-off to filter variants when
-    \code{filtering} is TRUE.}
-  \item{FILTER}{Filter label when \code{filtering} is
-    TRUE.}
+  \item{alter.PL}{Phred-scaled genotype likelihoods of variant call to
+    define a variant. The PL information can be extracted from PL column
+    (both GATK and Samtools) in the VCF data.}
+  \item{alter.AD}{The minimum depth of variant allele when alter is
+    TRUE. The information of variant allele depth can be extracted from AD
+    (GATK) or DP4 (Samtools) column in the VCF data.}
+  \item{alter.ADP}{The minimum percentage of read depth containing
+    variant allele.}
+  \item{QUAL}{Phred-scaled variant likelihoods of variant call. The QUAL
+    information can be extracted from QUAL column (both GATK and Samtools)
+    in the VCF data.}
+  \item{DP}{The minimum and maximum of position-level read depth. The DP
+    information can be extracted from DP column (both GATK and Samtools)
+    in the VCF data.} 
+  \item{GQ}{Phred-scaled score for most likely genotype at position of
+    interest. The GQ information can be extracted from GQ column (both
+    GATK and Samtools) in the VCF data. If NULL, the option will be
+    ignored.}
+  \item{FILTER}{'NULL' or 'PASS'. The VCF format of variant call produced
+    by GATK will label quality status of each position. This information
+    can be extracted from FILTER column (GATK) in the VCF data. If the VCF
+    data is produced by Samtools, FILTER column will contain empty
+    information. If 'NULL' is set, all variants will be parsed. If 'PASS'
+    is set, only variant with 'PASS' label will be parsed.}
   \item{tabix}{The file path of executable tabix.}
   \item{parallel}{If TRUE, the function will run in parallel model.}
   \item{pn}{The CPU numbers to be used if parallel is TRUE.}
@@ -61,7 +72,7 @@ tabix="tabix", parallel=FALSE, pn=4, type=NULL, ...)
     lists the path of compressed VCF sequence call file. The high-volume
     data in tab-delimited VCF formats can be efficiently compressed by
     bgzip program and retrieved through tabix program from open-source
-    SAMtool package. If the VCF format file is compressed by bgzip,
+    Samtools package. If the VCF format file is compressed by bgzip,
     tabix should be installed. The path of tabix should be specified in
     the function if it is not in the PATH system environment.}
 

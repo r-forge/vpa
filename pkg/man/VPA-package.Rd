@@ -2,7 +2,7 @@
 \alias{VPA-package}
 \alias{VPA}
 \docType{package}
-\title{Extract variants from VCF data with specified vairant frequency pattern}
+\title{Extract variants from VCF data with specified variant frequency pattern}
 \description{
   VPA (Variant Pattern Analyzer) is a package for prioritizing variants with user-specified frequency
   pattern from multiple study subjects in next-generation sequencing study. The package starts from individual 

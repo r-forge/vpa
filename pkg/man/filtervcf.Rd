@@ -22,27 +22,32 @@ QUAL = 20, DP = c(10,500), GQ = NULL, FILTER = NULL, INDEL = NULL)
     option will be ignored.
 %%     ~~Describe \code{alter} here~~
 }
-\item{alter.PL}{Phred-scaled genotype likelihoods of variant call to define a variant.}
-\item{alter.AD}{The minimum depth of variant allele when alter is TRUE. The
-  variant allele depths are extracted from AD (GATK) or DP4 (Samtools) column in the VCF
-  data.}
-\item{alter.ADP}{The minimum pecentage of read depth containing variant allele.}
-  \item{QUAL}{phred-scaled variant likelihoods of variant call.
-%%     ~~Describe \code{QUAL} here~~
-}
-  \item{DP}{position-level read depth.
-%%     ~~Describe \code{DP} here~~
-}
-  \item{GQ}{Phred-scaled score for most likely genotype at position of interest.}
-%%     ~~Describe \code{GQ} here~~
-  \item{FILTER}{Quality label to keep. The VCF format of variant call by GATK
-    VariantFiltration will label quality of each position.
-%%     ~~Describe \code{FILTER} here~~
-}
-  \item{INDEL}{Logical value. If TRUE, only INDELs are evaluated. If
-    FALSE, only point variants are evaluated.
-%%     ~~Describe \code{INDEL} here~~
-}
+\item{alter.PL}{Phred-scaled genotype likelihoods of variant call to
+  define a variant. The PL information can be extracted from PL column
+  (both GATK and Samtools) in the VCF data.}
+\item{alter.AD}{The minimum depth of variant allele when alter is
+  TRUE. The information of variant allele depth can be extracted from AD
+  (GATK) or DP4 (Samtools) column in the VCF data.}
+\item{alter.ADP}{The minimum percentage of read depth containing variant allele.}
+\item{QUAL}{phred-scaled variant likelihoods of variant call. The QUAL
+  information can be extracted from QUAL column (both GATK and Samtools)
+  in the VCF data.}
+\item{DP}{The minimum and maximum of position-level read depth. The DP
+  information can be extracted from DP column (both GATK and Samtools)
+  in the VCF data.} 
+\item{GQ}{Phred-scaled score for most likely genotype at position of
+  interest. The GQ information can be extracted from GQ column (both
+  GATK and Samtools) in the VCF data. If NULL, the option will be
+  ignored.}
+\item{FILTER}{'NULL' or 'PASS'. The VCF format of variant call produced
+  by GATK will label quality status of each position. This information
+  can be extracted from FILTER column (GATK) in the VCF data. If the VCF
+  data is produced by Samtools, FILTER column will contain empty
+  information. If 'NULL' is set, all variants will be parsed. If 'PASS'
+  is set, only variant with 'PASS' label will be parsed.} 
+\item{INDEL}{Logical value. If TRUE, only INDELs are evaluated. If
+  FALSE, only point variants are evaluated. If NULL, the option will be
+  ignored.}
 }
 \details{
 %%  ~~ If necessary, more details than the description above ~~

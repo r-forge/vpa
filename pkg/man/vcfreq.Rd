@@ -24,7 +24,7 @@ vcfreq(vcf, method="fisher.test", p=1, ...)
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{
-  A data frame to list the position, REF, genotypes, variant allele frequecies and
+  A data frame to list the position, REF, genotypes, variant allele frequencies and
   p.value of all variants across study groups.
 
 %%  ~Describe the value returned

@@ -28,13 +28,13 @@ gefreq(vcf, method="fisher.test", p=1, level="gene", ref="hg19", ...)
   %%  ~~ If necessary, more details than the description above ~~
 }
 \value{
-  A list contains a dataframe of frequecies between groups and an
+  A list contains a dataframe of frequencies between groups and an
   annotation list of each samples.
   \item{frequency }{A data frame to list the gene name, variation
     distribution, variation frequency and p.value of all genes with
     variants across study groups.}
   \item{otherfreq }{A data frame to list the frequency results of the
-    genes that are not in the sepecified level.}
+    genes that are not in the specified level.}
   \item{annotation }{A list including gene annotations for the variants of
     each sample.}
   %%  ~Describe the value returned

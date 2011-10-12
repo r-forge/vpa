@@ -16,21 +16,22 @@
 
 *Welcome to Variant Pattern Analyzer (VPA) project!*
 * Introduction
-  The package can be used to extract sequencing variants with user-specified frequency based on either variant calls alone or both variant and sequence calls. To make use of sequence call data, the installation of open source tabix tool is required. Examples of using VPA can be found in [[./VPA.pdf][doc/VPA.pdf]].
+  The package can be used to extract sequencing variants with user-specified frequency based on either variant calls alone or both variant and sequence calls. To make use of sequence call data, the installation of open source tabix tool is required. Examples of using VPA can be found in [[./VPA.pdf][doc/VPA.pdf]]. The manual can be download [[./VPA-manual.pdf][here]].
 * Dependencies
-The package can invoke tabix (http://samtools.sourceforge.net/tabix.shtml) in one of the following two ways.
-a)To install tabix directly from SAMtools:
-    URL: http://sourceforge.net/projects/samtools/files/tabix/
-    Once installed, users can specify the path of *tabix* in the argument "tabix=" of the function LoadFiltering (or pos2seq).
-b)To install tabix from a developing version of Rsamtools:
-    URL: http://www.bioconductor.org/packages/2.9/bioc/html/Rsamtools.html
-    Once installed and loaded (i.e., library(Rsamtools)), the function *scanTabix* in the package Rsamtools can be invoked by setting the argument "tabix=NULL" of the function LoadFiltering (or pos2seq).
-Tabix is recommended for installation as it runs more efficiently than Rsamtools in current version.
+VPA use tabix function for efficient information retrieval (http://samtools.sourceforge.net/tabix.shtml). There are two ways to install tabix function:
+a) To install tabix directly from SAMtools:
+    - URL: http://sourceforge.net/projects/samtools/files/tabix/
+    - Once installed, users can specify the path of *tabix* in the argument "tabix=" of the function LoadFiltering (or pos2seq).
+b)To install scanTabix from a developing version of Rsamtools:
+    - URL: http://www.bioconductor.org/packages/2.9/bioc/html/Rsamtools.html
+    - Once installed and loaded (i.e., library(Rsamtools)), the function *scanTabix* in the package Rsamtools can be invoked by setting the argument "tabix=NULL" of the function LoadFiltering (or pos2seq).
+We recommend users to install tabix directly from SAMtools as it runs more efficiently than Rsamtools in current version.
 * Installation
 Within R:
 ##+begin_src R
 > install.packages("VPA", repos=c("http://R-Forge.R-project.org", "http://cran.r-project.org"))
 ##+end_src
+To run VPA package, it is required to have tabix installed (as described in the Dependencies section).
 * Project summary
 The project summary page you can find [[http://r-forge.r-project.org/projects/vpa/] here]].
 * News

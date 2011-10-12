@@ -22,7 +22,7 @@ Patterning(x, pattern, paired=FALSE, not.covered=NULL, var.PL=NULL)
   paired is TRUE, control group label in index file should be marked as
   control. Sample names should be matched between case and its matched control.}
   \item{not.covered}{Logical value for the position with sequence coverage
-    less than specified depth. If TURE, such low-coverage positions will be
+    less than specified depth. If TRUE, such low-coverage positions will be
     considered as variant. If FALSE, such low-coverage positions will be
     considered as reference. If it's NULL (default), such low-coverage positions
     will be filtered.}
@@ -31,8 +31,8 @@ Patterning(x, pattern, paired=FALSE, not.covered=NULL, var.PL=NULL)
     \code{alter.PL} is not NULL in the function LoadFiltering. When
     filtering variants with specified frequency pattern, possible
     variants are considered as variants if TRUE. If FALSE, possible
-    variants are considered as nonvariants. If NULL, possible variants
-    are considered as nonvariants in all groups.}
+    variants are considered as non-variants. If NULL, possible variants
+    are considered as non-variants in all groups.}
 }
 \details{
    This function is used to extract variant with user-specified frequency pattern across study subjects. 

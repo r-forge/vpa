@@ -23,7 +23,7 @@ NULL)
     specified positions.
     %%     ~~Describe \code{POS} here~~
   }
-  \item{CHRPOS}{Position within a chromosome seperated by colon.}
+  \item{CHRPOS}{Position within a chromosome separated by colon.}
   \item{samples}{To specify sample(s) of interest.
     %%     ~~Describe \code{samples} here~~
   }
