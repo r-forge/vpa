@@ -33,6 +33,6 @@ Within R:
 ##+end_src
 To run VPA package, it is required to have tabix installed (as described in the Dependencies section).
 * Project summary
-The project summary page you can find [[http://r-forge.r-project.org/projects/vpa/] here]].
+The project summary page you can find [[http://r-forge.r-project.org/projects/vpa/][here]].
 * News
 #+INCLUDE: "NEWS"
