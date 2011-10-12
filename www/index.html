@@ -113,28 +113,14 @@ lang="en" xml:lang="en">
 <h2 id="sec-2"><span class="section-number-2">2</span> Dependencies </h2>
 <div class="outline-text-2" id="text-2">
 
-<p>The package can invoke tabix in one of the following two ways.<br/>
-a)To install tabix directly from SAMtools: <br/>
-</p><ul>
-<li>
-URL: <a href="http://samtools.sourceforge.net/tabix.shtml">http://samtools.sourceforge.net/tabix.shtml</a>. <br/>
-</li>
-<li>
-User can specify the path of tabix in the argument "tabix=" of the function LoadFiltering/pos2seq.<br/>
-</li>
-</ul>
-
-<p>b)To install developing version of Rsamtools:<br/>
-</p><ul>
-<li>
+<p>The package can invoke tabix (<a href="http://samtools.sourceforge.net/tabix.shtml">http://samtools.sourceforge.net/tabix.shtml</a>) in one of the following two ways.<br/>
+a)To install tabix directly from SAMtools:<br/>
+URL: <a href="http://sourceforge.net/projects/samtools/files/tabix/">http://sourceforge.net/projects/samtools/files/tabix/</a><br/>
+Once installed, users can specify the path of <b>tabix</b> in the argument "tabix=" of the function LoadFiltering (or pos2seq).<br/>
+b)To install tabix from a developing version of Rsamtools:<br/>
 URL: <a href="http://www.bioconductor.org/packages/2.9/bioc/html/Rsamtools.html">http://www.bioconductor.org/packages/2.9/bioc/html/Rsamtools.html</a><br/>
-</li>
-<li>
-The function scanTabix in the package Rsamtools can be invoked by the argument tabix=NULL instead.<br/>
-</li>
-</ul>
-
-<p>Tabix is recommended for installation as it runs more efficiently than Rsamtools in current version.<br/>
+Once installed and loaded (i.e., library(Rsamtools)), the function <b>scanTabix</b> in the package Rsamtools can be invoked by setting the argument "tabix=NULL" of the function LoadFiltering (or pos2seq).<br/>
+Tabix is recommended for installation as it runs more efficiently than Rsamtools in current version.<br/>
 </p></div>
 
 </div>
@@ -153,7 +139,7 @@ The function scanTabix in the package Rsamtools can be invoked by the argument t
 <h2 id="sec-4"><span class="section-number-2">4</span> Project summary </h2>
 <div class="outline-text-2" id="text-4">
 
-<p>The project summary page you can find <a href="http://r-forge.r-project.org/projects/vpa/">here</a>.<br/>
+<p>The project summary page you can find [[http://r-forge.r-project.org/projects/vpa/] here]].<br/>
 </p></div>
 
 </div>
@@ -162,7 +148,9 @@ The function scanTabix in the package Rsamtools can be invoked by the argument t
 <h2 id="sec-5"><span class="section-number-2">5</span> News </h2>
 <div class="outline-text-2" id="text-5">
 
-<p>Date:   Fri Sep 30<br/>
+<p>Date:   Wed Oct 12<br/>
+version 0.3.2; Modified manual and vignette.<br/>
+Date:   Fri Sep 30<br/>
 version 0.3.0.<br/>
 Updata functions:<br/>
 filtervcf, LoadFiltering: Add min, max for DP. Add alter.AD, cutoff for alt allele depth. Add alter.ADP, percentage of AD.<br/>
