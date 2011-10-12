@@ -1,4 +1,4 @@
-vcfreq <- function(vcf, method="fisher.test", ...){
+vcfreq <- function(vcf, method="fisher.test", p=1, ...){
   if(class(vcf)!="varlist")stop(paste(vcf, "is not a varlist object."))
   if(!is.null(vcf$VarVCF)){
     vcflist <- vcf$VarVCF
@@ -71,5 +71,6 @@ vcfreq <- function(vcf, method="fisher.test", ...){
   freq <- cbind(REF, altm, frequency, p.value)
   rownames(freq) <- Pos
   freq <- freq[order(p.value),]
+  freq <- freq[as.numeric(freq[, "p.value"])<=p, ]
   return(freq)
 }

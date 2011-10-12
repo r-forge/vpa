@@ -3,17 +3,19 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{Variant frequency of a varlist}
 \description{
-  To summarize the frequency of extracted variants.
+  To summarize the frequency of variants and estimate the statistical
+  significance of frequency difference.
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-vcfreq(vcf, method="fisher.test", ...)
+vcfreq(vcf, method="fisher.test", p=1, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{vcf}{A varlist object.}
   \item{method}{The allele frequency test method to be used. This must
     be one of "fisher.test" and "chisq.test".}
+  \item{p}{The maximum of the p values.}
   \item{...}{More arguments for the test method.}
 %%     ~~Describe \code{file} here~~
 }
@@ -22,8 +24,8 @@ vcfreq(vcf, method="fisher.test", ...)
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{
-  A data frame to list the REF, genotypes, alter allele frequecies and
-  p.value of all positions across study groups.
+  A data frame to list the position, REF, genotypes, variant allele frequecies and
+  p.value of all variants across study groups.
 
 %%  ~Describe the value returned
 %%  If it is a LIST, use

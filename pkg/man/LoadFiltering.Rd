@@ -6,7 +6,7 @@
 \description{
   To load data from study subjects and perform position-level quality filtering. 
   The index.txt file contains group status and VCF file location of each subject. 
-  The function take index.txt   file as input to load variant and sequence call 
+  The function take index.txt file as input to load variant and sequence call 
   files automatically. 
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
@@ -30,8 +30,8 @@ tabix="tabix", parallel=FALSE, pn=4, type=NULL, ...)
   \item{alter.PL}{Phred-scaled genotype likelihoods to define a
     variant. If it's not NULL, PL scores from sequence-level calls are
     used to decide a variant besides from variant calls.}
-  \item{alter.AD}{The minimum depth of alter allele.}
-  \item{alter.ADP}{The minimum depth percentage of alter allele.}
+  \item{alter.AD}{The minimum depth of variant allele.}
+  \item{alter.ADP}{The minimum pecentage of read depth containing variant allele.}
   \item{QUAL}{Phred-like quality score cut-off to filter variants when
     \code{filtering} is TRUE.}
   \item{DP}{Sequencing depth cut-off to filter variants when
@@ -68,17 +68,21 @@ tabix="tabix", parallel=FALSE, pn=4, type=NULL, ...)
   \code{Quality criteria} {The detail of quality scores in VCF data can
     be found at \url{http://www.1000genomes.org/node/101}.}
   
-  \code{parallel} {This function will extract calls in sequential mode. If parallel is true, the function will extract calls in parallel mode. The package
-    \code{Rmpi} and \code{snowfall} are required for parallel mode.}
+  \code{parallel} {This function will extract calls in sequential
+    mode. If parallel is true, the function will extract calls in
+    parallel mode. The package \code{Rmpi} and \code{snowfall} are
+    required for parallel mode.}
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{
   The value returned is a varlist, including \code{vcflist},
   \code{VarIndex} and \code{Samples}.
-  \item{varlist}{A list of vcf objects, one for each sample. If the filtering is true, the variant data are filtered by
-    specified quality criteria.}
+  \item{varlist}{A list of vcf objects, one for each sample. If the
+    filtering is true, the variant data are filtered by specified
+    quality criteria.}
   \item{VarIndex}{The indexes for all variant positions. TRUE
-    denotes the presence of variant. FALSE denotes the absence of variant. NA denotes low coverage.}
+    denotes the presence of variant. FALSE denotes the absence of
+    variant. NA denotes low coverage.}
   \item{Sample}{Samples annotation from the input index file.}
 %%  ~Describe the value returned
 %%  If it is a LIST, use
@@ -106,7 +110,8 @@ tabix="tabix", parallel=FALSE, pn=4, type=NULL, ...)
 \examples{
 
 setwd(system.file("extdata", package="VPA"))
-varflt <- LoadFiltering(file="index1.txt", filtering=TRUE, alter.PL=20, alter.AD=3)
+varflt <- LoadFiltering(file="index1.txt", filtering=TRUE, alter.PL=20,
+alter.AD=3)
 pattern <- cbind(A=c(1/4,1), B=c(0,0))
 varRes1 <- Patterning(varflt, pattern, var.PL=c(FALSE, TRUE))
 

@@ -7,14 +7,15 @@
   VPA (Variant Pattern Analyzer) is a package for prioritizing variants with user-specified frequency
   pattern from multiple study subjects in next-generation sequencing study. The package starts from individual 
   files of sequence and   variant calls and the extract variants with user-specified frequency
-  pattern across the study subjects of interest.
+  pattern across the study subjects of interest.  The frequency pattern can be analyzed at both variant level and gene level, 
+  and functions are provided to assess the statistical significance of observed frequency difference. 
 }
 \details{
 \tabular{ll}{
 Package: \tab VPA\cr
 Type: \tab Package\cr
-Version: \tab 0.3.1\cr
-Date: \tab 2011-10-5\cr
+Version: \tab 0.3.2\cr
+Date: \tab 2011-10-12\cr
 License: \tab GPL-2\cr
 LazyLoad: \tab yes\cr
 }

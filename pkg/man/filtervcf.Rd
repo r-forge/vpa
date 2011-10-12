@@ -4,7 +4,7 @@
 \title{Variant filtering}
 \description{
   VCF format file contains various score to assess the positional-level quality of
-  variant and sequence call. Function filtervcf can be used to filter
+  variant and sequence call. The function filtervcf can be used to filter
   variants with user-specified quality criteria.
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
@@ -17,14 +17,16 @@ QUAL = 20, DP = c(10,500), GQ = NULL, FILTER = NULL, INDEL = NULL)
   \item{vcf}{A VCF object for filtering.
 %%     ~~Describe \code{x} here~~
 }
-  \item{alter}{Logical value. If TRUE, the variant positions are kept. If FALSE, the variant positions are discarded. If NULL, the option will be ignored.
+  \item{alter}{Logical value. If TRUE, the variant positions are
+    kept. If FALSE, the variant positions are discarded. If NULL, the
+    option will be ignored.
 %%     ~~Describe \code{alter} here~~
 }
 \item{alter.PL}{Phred-scaled genotype likelihoods of variant call to define a variant.}
-\item{alter.AD}{The minimum depth of alter allele when alter is TRUE. The
-  alt allel depths are read from AD (GATK) or DP4 (Samtools) in the VCF
+\item{alter.AD}{The minimum depth of variant allele when alter is TRUE. The
+  variant allele depths are extracted from AD (GATK) or DP4 (Samtools) column in the VCF
   data.}
-\item{alter.ADP}{The minimum depth pecentage of alter allele.}
+\item{alter.ADP}{The minimum pecentage of read depth containing variant allele.}
   \item{QUAL}{phred-scaled variant likelihoods of variant call.
 %%     ~~Describe \code{QUAL} here~~
 }
@@ -37,7 +39,8 @@ QUAL = 20, DP = c(10,500), GQ = NULL, FILTER = NULL, INDEL = NULL)
     VariantFiltration will label quality of each position.
 %%     ~~Describe \code{FILTER} here~~
 }
-  \item{INDEL}{Logical value. If TRUE, only INDELs are evaluated. If FALSE, only point variants are evaluated.
+  \item{INDEL}{Logical value. If TRUE, only INDELs are evaluated. If
+    FALSE, only point variants are evaluated.
 %%     ~~Describe \code{INDEL} here~~
 }
 }
@@ -76,7 +79,8 @@ QUAL = 20, DP = c(10,500), GQ = NULL, FILTER = NULL, INDEL = NULL)
 #Filter alignment artifacts to get promising SNP
 vcffile <- system.file("extdata", "1151HZ0001.flt.vcf", package="VPA")
 vcfdata <- read.vcf(vcffile)
-vcflt <- filtervcf(vcfdata, alter=TRUE, alter.AD=3, QUAL=20, DP=c(10,500), GQ=20, INDEL=FALSE)$filtered
+vcflt <- filtervcf(vcfdata, alter=TRUE, alter.AD=3, QUAL=20,
+DP=c(10,500), GQ=20, INDEL=FALSE)$filtered
 write.vcf(vcflt)
 
 }

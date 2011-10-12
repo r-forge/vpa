@@ -1,4 +1,4 @@
-gefreq <- function(vcf, method="fisher.test", level="gene", ref="hg19", ...){
+gefreq <- function(vcf, method="fisher.test", p=1, level="gene", ref="hg19", ...){
   if(class(vcf)!="varlist")stop(paste(vcf, "is not a varlist object."))
   if(!is.null(vcf$VarVCF)){
     vcflist <- vcf$VarVCF
@@ -53,10 +53,18 @@ gefreq <- function(vcf, method="fisher.test", level="gene", ref="hg19", ...){
     }
   }
   freq <- cbind(altm, frequency, p.value)
-  freq <- freq[order(Genes,p.value),]
+  #freq <- freq[order(Genes, p.value),]
+  freq <- freq[as.numeric(freq[, "p.value"])<=p, ]
+  lf <- grep(paste("^", level, sep=""), rownames(freq))
+  freq1 <- rbind(freq[lf, ])
+  rownames(freq1) <- Genes[lf]
+  freq1 <- freq1[order(as.numeric(freq1[, "p.value"])),]
+  freq2 <- rbind(freq[-lf, ])
+  rownames(freq2) <- Genes[-lf]
+  
   #annotation
   colnames(PosAnn) <- c("position", "annotation", "genename")
   ann <- lapply(pos, function(x)PosAnn[match(x, PosAnn[,1]),])
   
-  list(frequency=freq, annotation=ann)  
+  list(frequency=freq1, otherfreq=freq2, annotation=ann)  
 }

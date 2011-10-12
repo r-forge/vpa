@@ -1,7 +1,7 @@
 \name{getref}
 \alias{getref}
 \title{Download reference gene table}
-\description{To download reference gene table from UCSC golden path.
+\description{To download reference gene table from UCSC genome browser golden path.
 }
 \usage{
 getref(ref="hg19")
@@ -12,11 +12,12 @@ getref(ref="hg19")
 %%     ~~Describe \code{x} here~~
 }
 \details{
-  List of reference genomes can be found in \url{http://hgdownload.cse.ucsc.edu/goldenPath/}.
+  List of reference gene table can be found at:
+  \url{http://hgdownload.cse.ucsc.edu/goldenPath/}.
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{
-  A data.frame from flat table of reference genome.
+  A data.frame from flat table of reference gene annotation.
 %%  ~Describe the value returned
 %%  If it is a LIST, use
 %%  \item{comp1 }{Description of 'comp1'}
