@@ -1,7 +1,7 @@
 \name{Pos2Gene}
 \alias{Pos2Gene}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{Map position to gene}
+\title{Map sequencing variants to gene}
 \description{The function is used to annotate a variant to its
   gene. The annotation information is based on the refseq table downloaded from the UCSC genome browser.
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~

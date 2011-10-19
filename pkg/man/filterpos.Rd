@@ -1,7 +1,7 @@
 \name{filterpos}
 \alias{filterpos}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{Position filtering}
+\title{Filter variants against known SNP dataset}
 \description{
   The function is used to filter variants against known SNP dataset in VCF, bed,
   gff or user-specified position files. For example, variants in VCF format

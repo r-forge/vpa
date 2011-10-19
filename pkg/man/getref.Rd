@@ -1,6 +1,6 @@
 \name{getref}
 \alias{getref}
-\title{Download reference gene table}
+\title{Download reference gene annotation}
 \description{To download reference gene table from UCSC genome browser golden path.
 }
 \usage{

@@ -1,7 +1,7 @@
 \name{filtervcf}
 \alias{filtervcf}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{Variant filtering}
+\title{Filter variants with user-specified quality criteria}
 \description{
   VCF format file contains various score to assess the positional-level quality of
   variant and sequence call. The function filtervcf can be used to filter

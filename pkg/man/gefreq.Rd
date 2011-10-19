@@ -1,7 +1,7 @@
 \name{gefreq}
 \alias{gefreq}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{Gene frequency of a varlist}
+\title{Frequency analysis at gene level}
 \description{
   To summarize the frequency of variants in gene level and estimate the
   statistical significance of frequency difference.
