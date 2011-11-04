@@ -122,15 +122,21 @@ URL: <a href="http://sourceforge.net/projects/samtools/files/tabix/">http://sour
 <li>
 Once installed, users can specify the path of <b>tabix</b> in the argument "tabix=" of the function LoadFiltering (or pos2seq).<br/>
 </li>
+<li>
+Note that <b>tabix</b> is only available for Unix-like operation system.<br/>
+</li>
 </ul>
 
-<p>b) To install scanTabix from a developing version of Rsamtools:<br/>
+<p>b) To install <b>scanTabix</b> from the latest version (&gt;=1.6.0) of Rsamtools:<br/>
 </p><ul>
 <li>
 URL: <a href="http://www.bioconductor.org/packages/2.9/bioc/html/Rsamtools.html">http://www.bioconductor.org/packages/2.9/bioc/html/Rsamtools.html</a><br/>
 </li>
 <li>
 Once installed and loaded (i.e., library(Rsamtools)), the function <b>scanTabix</b> in the package Rsamtools can be invoked by setting the argument "tabix=NULL" of the function LoadFiltering (or pos2seq).<br/>
+</li>
+<li>
+Note that <b>scanTabix</b> is available for both Unix-like and windows operation system.<br/>
 </li>
 </ul>
 
@@ -143,7 +149,8 @@ Once installed and loaded (i.e., library(Rsamtools)), the function <b>scanTabix<
 <h2 id="sec-3"><span class="section-number-2">3</span> Installation </h2>
 <div class="outline-text-2" id="text-3">
 
-<p>Within R (&gt;=2.13):<br/>
+<p><font color="red">For Unix-like operation system, the version of R should be &gt;= 2.12.1; For Windows operation system, the version of R should be &gt;=2.14.0.</font><br/>
+Within R:<br/>
 &gt; install.packages("VPA", repos=c("<a href="http://R-Forge.R-project.org">http://R-Forge.R-project.org</a>", "<a href="http://cran.r-project.org">http://cran.r-project.org</a>"))<br/>
 To run VPA package, it is required to have tabix installed (as described in the Dependencies section).<br/>
 </p></div>

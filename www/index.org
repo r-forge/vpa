@@ -22,12 +22,15 @@ VPA use tabix function for efficient information retrieval (http://samtools.sour
 a) To install tabix directly from SAMtools:
     - URL: http://sourceforge.net/projects/samtools/files/tabix/
     - Once installed, users can specify the path of *tabix* in the argument "tabix=" of the function LoadFiltering (or pos2seq).
-b) To install scanTabix from a developing version of Rsamtools:
+    - Note that *tabix* is only available for Unix-like operation system.
+b) To install *scanTabix* from the latest version (>=1.6.0) of Rsamtools:
     - URL: http://www.bioconductor.org/packages/2.9/bioc/html/Rsamtools.html
     - Once installed and loaded (i.e., library(Rsamtools)), the function *scanTabix* in the package Rsamtools can be invoked by setting the argument "tabix=NULL" of the function LoadFiltering (or pos2seq).
+    - Note that *scanTabix* is available for both Unix-like and windows operation system.
 We recommend users to install tabix directly from SAMtools as it runs more efficiently than Rsamtools in current version.
 * Installation
-Within R (>=2.13):
+*For Unix-like operation system, the version of R should be >= 2.12.1; For Windows operation system, the version of R should be >=2.14.0.*
+Within R:
 ##+begin_src R
 > install.packages("VPA", repos=c("http://R-Forge.R-project.org", "http://cran.r-project.org"))
 ##+end_src

@@ -2,12 +2,12 @@ Package: VPA
 Type: Package
 Title: Variant Pattern Analyzer for next-generation sequencing study
 Version: 0.3.4
-Date: 2011-10-19
+Date: 2011-11-04
 Author: Qiang Hu
 Maintainer: Qiang Hu <huqmail@gmail.com>
-Depends: R (>= 2.13.0), snowfall
+Depends: R (>= 2.12.1), snowfall
 Suggests: Rsamtools
 Enhances: Rmpi, snow
-Description: VPA (Variant Pattern Analyzer) is a package for prioritizing variants with specified frequency pattern from multiple study subjects in next-generation sequencing study.
+Description: VPA (Variant Pattern Analyzer) is a package for prioritizing variants with specified frequency pattern from multiple study subjects in next-generation sequencing study. To install VPA package in Unix-like operation system, the version of R should be >= 2.12.1. To install VPA package in Windows operation system, the version of R should be >=2.14.
 License: GPL-2
 LazyLoad: yes
