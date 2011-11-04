@@ -16,7 +16,7 @@
 
 *Welcome to Variant Pattern Analyzer (VPA) project!*
 * Introduction
-  The package can be used to extract sequencing variants with user-specified frequency based on either variant calls alone or both variant and sequence calls. To make use of sequence call data, the installation of open source tabix tool is required. Examples of using VPA can be found in [[./VPA.pdf][doc/VPA.pdf]]. The manual can be downloaded [[./VPA-manual.pdf][here]].
+  The package can be used to extract sequencing variants with user-specified frequency based on either variant calls alone or both variant and sequence calls in the next-generation sequencing study. To make use of sequence call data, the installation of open source tabix tool is required. Examples of using VPA can be found in [[./VPA.pdf][doc/VPA.pdf]]. The manual can be downloaded [[./VPA-manual.pdf][here]].
 * Dependencies
 VPA use tabix function for efficient information retrieval (http://samtools.sourceforge.net/tabix.shtml). There are two ways to install tabix function:
 a) To install tabix directly from SAMtools:
@@ -27,7 +27,7 @@ b) To install scanTabix from a developing version of Rsamtools:
     - Once installed and loaded (i.e., library(Rsamtools)), the function *scanTabix* in the package Rsamtools can be invoked by setting the argument "tabix=NULL" of the function LoadFiltering (or pos2seq).
 We recommend users to install tabix directly from SAMtools as it runs more efficiently than Rsamtools in current version.
 * Installation
-Within R:
+Within R (>=2.13):
 ##+begin_src R
 > install.packages("VPA", repos=c("http://R-Forge.R-project.org", "http://cran.r-project.org"))
 ##+end_src
