@@ -3,8 +3,10 @@ getref <- function(ref="hg19"){
   tmpfile <- tempfile()
   download.file(paste("http://hgdownload.cse.ucsc.edu/goldenPath/", 
                       ref, "/database/refFlat.txt.gz", sep = ""), tmpfile, mode = "wb")
-  refGene <- read.delim(conn <- gzfile(tmpfile, open = "rt"), header = FALSE, sep = "\t", stringsAsFactors=FALSE)
-  close(conn)
+  #refGene <- read.delim(conn <- gzfile(tmpfile, open = "rt"), header = FALSE, sep = "\t", stringsAsFactors=FALSE)
+  #close(conn)
+  refGene <- read.delim(tmpfile, header = FALSE, sep = "\t", stringsAsFactors=FALSE)
+  
   download.file(paste("http://hgdownload.cse.ucsc.edu/goldenPath/", 
                       ref, "/database/refFlat.sql", sep = ""), tmpfile, mode = "wb")
   refName <- readLines(tmpfile)
