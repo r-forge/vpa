@@ -40,10 +40,13 @@ read.vcf.default <- function(file, VCF=NULL, INFOID=NULL, FORMATID=NULL, ...){
     info1 <- strsplit(vcfdata$INFO, split=";")
     info1n <- lapply(info1, function(a)sapply(a, function(x)unlist(strsplit(x, split="="))[[1]]))
     info1v <- lapply(info1, function(a)sapply(a, function(x){inn <- unlist(strsplit(x, split="=")); ifelse(length(inn)>1, inn[2], TRUE)}))
-    info2 <- sapply(1:length(info1), function(x)info1v[[x]][match(INFOID, info1n[[x]])])
-    info2 <- t(rbind(info2))
+    if(length(info1)>0){
+      info2 <- sapply(1:length(info1), function(x)info1v[[x]][match(INFOID, info1n[[x]])])
+      info2 <- t(rbind(info2))
+    }else{
+      info2 <- matrix(nrow=0, ncol=length(INFOID))
+    }
     colnames(info2) <- INFOID
-  
 ##   info2 <- lapply(info1, function(x)x[match(INFOID, x)+1])  
 ##   info2 <- lapply(info1, function(x)x[match(INFOID, x)+1])
 ##   INFO <- matrix(unlist(info2), ncol=length(INFOID), byrow=TRUE)
@@ -65,9 +68,13 @@ read.vcf.default <- function(file, VCF=NULL, INFOID=NULL, FORMATID=NULL, ...){
   for(n in 1:(ncol(vcf)-9)){
     eval(parse(text=paste("SAMPLE <- vcfdata$SAMPLE",n, sep="")))
     score1 <- strsplit(SAMPLE, split=":")
-    format1 <- strsplit(vcfdata$FORMAT, split=":")  
-    score2 <- lapply(1:length(score1), function(x)score1[[x]][match(FORMATID, format1[[x]])])
-    SAMPLE <- matrix(unlist(score2), ncol=length(FORMATID), byrow=TRUE)
+    if(length(score1)>1){
+      format1 <- strsplit(vcfdata$FORMAT, split=":")  
+      score2 <- lapply(1:length(score1), function(x)score1[[x]][match(FORMATID, format1[[x]])])
+      SAMPLE <- matrix(unlist(score2), ncol=length(FORMATID), byrow=TRUE)
+    }else{
+      SAMPLE <- matrix(nrow=0, ncol=length(FORMATID))
+    }
     colnames(SAMPLE) <- FORMATID
     eval(parse(text=paste("vcfdata$SAMPLE",n," <- SAMPLE", sep="")))
   }

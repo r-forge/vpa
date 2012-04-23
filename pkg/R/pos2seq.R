@@ -29,6 +29,7 @@ pos2seq <- function(Pos, Seqfile, file="", tabix="tabix", region=5000){  #Pos: 2
         P2Seq[[1]] <- read.table(con, sep="\t")
       }else{
         P2Seq[[1]] <- NULL
+        close(con)
       }
     }else{
       for(i in 1:(length(regs)-1)){
@@ -51,12 +52,14 @@ pos2seq <- function(Pos, Seqfile, file="", tabix="tabix", region=5000){  #Pos: 2
       #pos2seq <- read.table(con, sep="\t")
       P2Seq[[length(regs)]] <- pos2seq
     }  
-    seq1 <- c() 
+    seq1 <- c()
     if(length(P2Seq)>0){
     for(i in 1:length(P2Seq)){
         seq1 <- rbind(seq1, P2Seq[[i]])
       }
-      seq1 <- as.matrix(seq1)
+      #seq1 <- as.matrix(seq1)
+    }else{
+      seq1 <- matrix(nrow=0, ncol=10)
     }
   }
   seq1 <- unique(seq1)

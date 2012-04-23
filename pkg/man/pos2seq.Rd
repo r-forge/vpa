@@ -60,13 +60,13 @@ pos2seq(Pos, Seqfile, file="", tabix="tabix", region = 5000)
 }
 \examples{
 
-vcffile <- system.file("extdata", "1151HZ0001.flt.vcf", package="VPA")
-vcfdata <- read.vcf(vcffile)
+#vcffile <- system.file("extdata", "1151HZ0001.flt.vcf", package="VPA")
+#vcfdata <- read.vcf(vcffile)
 
 ##extract calls from tabix indexed data
-Pos <- cbind(vcfdata$CHROM, vcfdata$POS)
-gzfile <- system.file("extdata", "1151HZ0006.vcf.gz", package="VPA")
-calls <- pos2seq(Pos, gzfile)
+#Pos <- cbind(vcfdata$CHROM, vcfdata$POS)
+#gzfile <- system.file("extdata", "1151HZ0006.vcf.gz", package="VPA")
+#calls <- pos2seq(Pos, gzfile)
 
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

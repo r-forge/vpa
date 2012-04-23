@@ -1,7 +1,7 @@
 
 LoadFiltering <- function(file, datadir=NULL, filtering=TRUE, alter.PL=20, alter.AD=3, alter.ADP=NULL, QUAL=20, DP=c(10,500), GQ=20, FILTER=NULL, tabix="tabix", parallel=FALSE, pn=4, type=NULL, ...)UseMethod("LoadFiltering")
 LoadFiltering.default <- function(file, datadir=NULL, filtering=TRUE, alter.PL=20, alter.AD=3, alter.ADP=NULL, QUAL=20, DP=c(10,500), GQ=20, FILTER=NULL, tabix="tabix", parallel=FALSE, pn=4, type=NULL, ...){
-  samples <- as.matrix(read.table(file, head=FALSE))
+  samples <- as.matrix(read.table(file, header=FALSE))
   if(!is.null(datadir)){
     vfilepath <- file.path(datadir, samples[,3])
   }else{

@@ -120,11 +120,11 @@ tabix="tabix", parallel=FALSE, pn=4, type=NULL, ...)
 }
 \examples{
 
-setwd(system.file("extdata", package="VPA"))
-varflt <- LoadFiltering(file="index1.txt", filtering=TRUE, alter.PL=20,
-alter.AD=3)
-pattern <- cbind(A=c(1/4,1), B=c(0,0))
-varRes1 <- Patterning(varflt, pattern, var.PL=c(FALSE, TRUE))
+#setwd(system.file("extdata", package="VPA"))
+#varflt <- LoadFiltering(file="index1.txt", filtering=TRUE, alter.PL=20,
+#alter.AD=3)
+#pattern <- cbind(A=c(1/4,1), B=c(0,0))
+#varRes1 <- Patterning(varflt, pattern, var.PL=c(FALSE, TRUE))
 
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

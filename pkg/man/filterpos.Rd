@@ -74,12 +74,12 @@ tabix="tabix", ...)
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
-vcffile1 <- system.file("extdata", "1151HZ0001.flt.vcf", package="VPA")
-vcfdata1 <- read.vcf(vcffile1)
-vcffile2 <- system.file("extdata", "1151HZ0006.flt.vcf", package="VPA")
-vcfdata2 <- read.vcf(vcffile2)
-vcf <- filterpos(vcfdata1, position=cbind(vcfdata2$CHROM, vcfdata2$POS,
-  vcfdata2$POS), chr=FALSE)
+# ivcffile1 <- system.file("extdata", "1151HZ0001.flt.vcf", package="VPA")
+# vcfdata1 <- read.vcf(vcffile1)
+# vcffile2 <- system.file("extdata", "1151HZ0006.flt.vcf", package="VPA")
+# vcfdata2 <- read.vcf(vcffile2)
+# vcf <- filterpos(vcfdata1, position=cbind(vcfdata2$CHROM, vcfdata2$POS,
+#  vcfdata2$POS), chr=FALSE)
 
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

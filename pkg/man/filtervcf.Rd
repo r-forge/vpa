@@ -82,11 +82,11 @@ QUAL = 20, DP = c(10,500), GQ = NULL, FILTER = NULL, INDEL = NULL)
 \examples{
 
 #Filter alignment artifacts to get promising SNP
-vcffile <- system.file("extdata", "1151HZ0001.flt.vcf", package="VPA")
-vcfdata <- read.vcf(vcffile)
-vcflt <- filtervcf(vcfdata, alter=TRUE, alter.AD=3, QUAL=20,
-DP=c(10,500), GQ=20, INDEL=FALSE)$filtered
-write.vcf(vcflt)
+#vcffile <- system.file("extdata", "1151HZ0001.flt.vcf", package="VPA")
+#vcfdata <- read.vcf(vcffile)
+#vcflt <- filtervcf(vcfdata, alter=TRUE, alter.AD=3, QUAL=20,
+#DP=c(10,500), GQ=20, INDEL=FALSE)$filtered
+#write.vcf(vcflt)
 
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
