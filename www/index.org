@@ -39,3 +39,6 @@ To run VPA package, it is required to have tabix installed (as described in the 
 The project summary page you can find [[http://r-forge.r-project.org/projects/vpa/][here]].
 * News
 #+INCLUDE: "NEWS"
+
+* Citations
+VPA: an R tool for analyzing sequencing variants with user-specified frequency pattern. Hu Q, Wang D, Yan L, Zhao H, Liu S. BMC Res Notes. 2012 Jan 14;5:31.

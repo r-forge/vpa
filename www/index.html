@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
                "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-lang="en" xml:lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>Variant Pattern Analyzer</title>
 <meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
+<meta name="title" content="Variant Pattern Analyzer"/>
 <meta name="generator" content="Org-mode"/>
 <meta name="generated" content="2011-08-10 Wed"/>
 <meta name="author" content="Qiang"/>
@@ -44,6 +44,12 @@ lang="en" xml:lang="en">
   dt { font-weight: bold; }
   div.figure { padding: 0.5em; }
   div.figure p { text-align: center; }
+  div.inlinetask {
+    padding:10px;
+    border:2px solid gray;
+    margin:10px;
+    background: #ffffcc;
+  }
   textarea { overflow-x: auto; }
   .linenr { font-size:smaller }
   .code-highlighted {background-color:#ffff00;}
@@ -79,8 +85,12 @@ lang="en" xml:lang="en">
 
 </head>
 <body>
-<div id="content">
 
+<div id="preamble">
+
+</div>
+
+<div id="content">
 <h1 class="title">Variant Pattern Analyzer</h1>
 
 
@@ -91,52 +101,47 @@ lang="en" xml:lang="en">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#sec-1">1 Introduction </a></li>
-<li><a href="#sec-2">2 Dependencies </a></li>
-<li><a href="#sec-3">3 Installation </a></li>
-<li><a href="#sec-4">4 Project summary </a></li>
-<li><a href="#sec-5">5 News </a></li>
+<li><a href="#sec-1">1 Introduction</a></li>
+<li><a href="#sec-2">2 Dependencies</a></li>
+<li><a href="#sec-3">3 Installation</a></li>
+<li><a href="#sec-4">4 Project summary</a></li>
+<li><a href="#sec-5">5 News</a></li>
+<li><a href="#sec-6">6 Citations</a></li>
 </ul>
 </div>
 </div>
 
 <div id="outline-container-1" class="outline-2">
-<h2 id="sec-1"><span class="section-number-2">1</span> Introduction </h2>
+<h2 id="sec-1"><span class="section-number-2">1</span> Introduction</h2>
 <div class="outline-text-2" id="text-1">
 
-<p>The package can be used to extract sequencing variants with user-specified frequency based on either variant calls alone or both variant and sequence calls in the next-generation sequencing study. To make use of sequence call data, the installation of open source tabix tool is required. Examples of using VPA can be found in <a href="./VPA.pdf">doc/VPA.pdf</a>. The manual can be downloaded <a href="./VPA-manual.pdf">here</a>.<br/>
+<p>  The package can be used to extract sequencing variants with user-specified frequency based on either variant calls alone or both variant and sequence calls in the next-generation sequencing study. To make use of sequence call data, the installation of open source tabix tool is required. Examples of using VPA can be found in <a href="./VPA.pdf">doc/VPA.pdf</a>. The manual can be downloaded <a href="./VPA-manual.pdf">here</a>.<br/>
 </p></div>
 
 </div>
 
 <div id="outline-container-2" class="outline-2">
-<h2 id="sec-2"><span class="section-number-2">2</span> Dependencies </h2>
+<h2 id="sec-2"><span class="section-number-2">2</span> Dependencies</h2>
 <div class="outline-text-2" id="text-2">
 
 <p>VPA use tabix function for efficient information retrieval (<a href="http://samtools.sourceforge.net/tabix.shtml">http://samtools.sourceforge.net/tabix.shtml</a>). There are two ways to install tabix function:<br/>
 a) To install tabix directly from SAMtools:<br/>
 </p><ul>
-<li>
-URL: <a href="http://sourceforge.net/projects/samtools/files/tabix/">http://sourceforge.net/projects/samtools/files/tabix/</a><br/>
+<li>URL: <a href="http://sourceforge.net/projects/samtools/files/tabix/">http://sourceforge.net/projects/samtools/files/tabix/</a><br/>
 </li>
-<li>
-Once installed, users can specify the path of <b>tabix</b> in the argument "tabix=" of the function LoadFiltering (or pos2seq).<br/>
+<li>Once installed, users can specify the path of <b>tabix</b> in the argument "tabix=" of the function LoadFiltering (or pos2seq).<br/>
 </li>
-<li>
-Note that <b>tabix</b> is only available for Unix-like operation system.<br/>
+<li>Note that <b>tabix</b> is only available for Unix-like operation system.<br/>
 </li>
 </ul>
 
 <p>b) To install <b>scanTabix</b> from the latest version (&gt;=1.6.0) of Rsamtools:<br/>
 </p><ul>
-<li>
-URL: <a href="http://www.bioconductor.org/packages/2.9/bioc/html/Rsamtools.html">http://www.bioconductor.org/packages/2.9/bioc/html/Rsamtools.html</a><br/>
+<li>URL: <a href="http://www.bioconductor.org/packages/2.9/bioc/html/Rsamtools.html">http://www.bioconductor.org/packages/2.9/bioc/html/Rsamtools.html</a><br/>
 </li>
-<li>
-Once installed and loaded (i.e., library(Rsamtools)), the function <b>scanTabix</b> in the package Rsamtools can be invoked by setting the argument "tabix=NULL" of the function LoadFiltering (or pos2seq).<br/>
+<li>Once installed and loaded (i.e., library(Rsamtools)), the function <b>scanTabix</b> in the package Rsamtools can be invoked by setting the argument "tabix=NULL" of the function LoadFiltering (or pos2seq).<br/>
 </li>
-<li>
-Note that <b>scanTabix</b> is available for both Unix-like and windows operation system.<br/>
+<li>Note that <b>scanTabix</b> is available for both Unix-like and windows operation system.<br/>
 </li>
 </ul>
 
@@ -146,10 +151,10 @@ Note that <b>scanTabix</b> is available for both Unix-like and windows operation
 </div>
 
 <div id="outline-container-3" class="outline-2">
-<h2 id="sec-3"><span class="section-number-2">3</span> Installation </h2>
+<h2 id="sec-3"><span class="section-number-2">3</span> Installation</h2>
 <div class="outline-text-2" id="text-3">
 
-<p><font color="red">For Unix-like operation system, the version of R should be &gt;= 2.12.1; For Windows operation system, the version of R should be &gt;=2.14.0.</font><br/>
+<p><b>For Unix-like operation system, the version of R should be &gt;= 2.12.1; For Windows operation system, the version of R should be &gt;=2.14.0.</b><br/>
 Within R:<br/>
 &gt; install.packages("VPA", repos=c("<a href="http://R-Forge.R-project.org">http://R-Forge.R-project.org</a>", "<a href="http://cran.r-project.org">http://cran.r-project.org</a>"))<br/>
 To run VPA package, it is required to have tabix installed (as described in the Dependencies section).<br/>
@@ -158,7 +163,7 @@ To run VPA package, it is required to have tabix installed (as described in the 
 </div>
 
 <div id="outline-container-4" class="outline-2">
-<h2 id="sec-4"><span class="section-number-2">4</span> Project summary </h2>
+<h2 id="sec-4"><span class="section-number-2">4</span> Project summary</h2>
 <div class="outline-text-2" id="text-4">
 
 <p>The project summary page you can find <a href="http://r-forge.r-project.org/projects/vpa/">here</a>.<br/>
@@ -167,41 +172,54 @@ To run VPA package, it is required to have tabix installed (as described in the 
 </div>
 
 <div id="outline-container-5" class="outline-2">
-<h2 id="sec-5"><span class="section-number-2">5</span> News </h2>
+<h2 id="sec-5"><span class="section-number-2">5</span> News</h2>
 <div class="outline-text-2" id="text-5">
 
 <p>Date:   Wed Oct 12<br/>
-version 0.3.2; Modified manual and vignette.<br/>
+    version 0.3.2; Modified manual and vignette.<br/>
 Date:   Fri Sep 30<br/>
-version 0.3.0.<br/>
-Updata functions:<br/>
-filtervcf, LoadFiltering: Add min, max for DP. Add alter.AD, cutoff for alt allele depth. Add alter.ADP, percentage of AD.<br/>
-vcfreq: add genotype. change to allele frequency.  add statistical test, fisher.test and chisq.test.<br/>
-Add functions:<br/>
-getref, Pos2Gene. Functions to map positions to genes.    <br/>
-filterpos: filter specified positions, such as dbSNP, 1K genome, customized vcf. Input file can be vcf, bed, gff and data.frame.<br/>
-gefreq: calculate gene level frequencies between groups and annotate variants to genes.<br/>
-Vignette:<br/>
-Modified VPA.Rnw. Add a new section about dbSNP/1000Genome filtering. Add more arguments in functions.<br/>
-Bugs fixed.<br/>
+    version 0.3.0.<br/>
+    Updata functions:<br/>
+	filtervcf, LoadFiltering: Add min, max for DP. Add alter.AD, cutoff for alt allele depth. Add alter.ADP, percentage of AD.<br/>
+	vcfreq: add genotype. change to allele frequency.  add statistical test, fisher.test and chisq.test.<br/>
+    Add functions:<br/>
+	getref, Pos2Gene. Functions to map positions to genes.    <br/>
+	filterpos: filter specified positions, such as dbSNP, 1K genome, customized vcf. Input file can be vcf, bed, gff and data.frame.<br/>
+	gefreq: calculate gene level frequencies between groups and annotate variants to genes.<br/>
+    Vignette:<br/>
+	Modified VPA.Rnw. Add a new section about dbSNP/1000Genome filtering. Add more arguments in functions.<br/>
+    Bugs fixed.<br/>
 Date:   Wed Aug 31<br/>
-version 0.2.4.<br/>
-Add PL to LoadFiltering and Patterning. Prossible variants can be filtered now.<br/>
-Bugs fixed.<br/>
+    version 0.2.4.<br/>
+    Add PL to LoadFiltering and Patterning. Prossible variants can be filtered now.<br/>
+    Bugs fixed.<br/>
 Date:   Mon Aug 8 08:56:21 2011<br/>
-version 0.2.2, pos2seq can choose Rsamtools instead of tabix<br/>
+    version 0.2.2, pos2seq can choose Rsamtools instead of tabix<br/>
 Date: Thu Jul 28<br/>
-version 0.2.1. add REF and ALT to function vcfreq.<br/>
+    version 0.2.1. add REF and ALT to function vcfreq.<br/>
+</p>
+<p><br/>
 </p>
 <p><br/>
 </p></div>
+
 </div>
+
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> Citations</h2>
+<div class="outline-text-2" id="text-6">
+
+<p>VPA: an R tool for analyzing sequencing variants with user-specified frequency pattern. Hu Q, Wang D, Yan L, Zhao H, Liu S. BMC Res Notes. 2012 Jan 14;5:31.<br/>
+</p></div>
+</div>
+</div>
+
 <div id="postamble">
-<p class="author"> Author: Qiang
-</p>
-<p class="date"> Date: 2011-08-10 Wed</p>
-<p class="creator">HTML generated by org-mode 7.4 in emacs 23</p>
-</div>
+<p class="date">Date: 2011-08-10 Wed</p>
+<p class="author">Author: Qiang</p>
+<p class="creator">Org version 7.8.11 with Emacs version 23</p>
+<a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
+
 </div>
 </body>
 </html>
