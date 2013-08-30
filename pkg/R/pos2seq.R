@@ -4,7 +4,8 @@ pos2seq <- function(Pos, Seqfile, file="", tabix="tabix", region=5000){  #Pos: 2
     tbx <- TabixFile(Seqfile)
     param <- GRanges(Pos[,1], IRanges(start=as.integer(Pos[,2])-1, end=as.integer(Pos[,2])))
     res <- scanTabix(tbx, param=param)
-    seq1 <- matrix(unlist(strsplit(unlist(res), split="\t")), nrow=length(res), byrow=TRUE)
+    #seq1 <- matrix(unlist(strsplit(unlist(res), split="\t")), nrow=length(res), byrow=TRUE)
+    seq1 <- do.call(rbind, strsplit(unlist(res), split="\t"))
     header <- headerTabix(tbx)$header
   }else{
   #read header
